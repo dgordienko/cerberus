@@ -1,26 +1,35 @@
 {
-    "name": "cerberus",
-    "description": "upsmile(c) Distributor(TM) Cerberus front-end application",
-    "main": "",
-    "authors": [
-        "Dmitry Gordienko <d.gordienko@gmail.com>"
-    ],
-    "license": "MIT",
-    "keywords": [
-        "distributor",
-        "cerberus",
-        "upsmile"
-    ],
-    "homepage": "http://cerberus.upsmile.ua",
-    "ignore": [
-        "**/.*",
-        "node_modules",
-        "bower_components",
-        "src/assets/bower_components",
-        "test",
-        "tests"
-    ],
-    "dependencies": {
-        "vaadin-core-elements": "^1.1.2"
-    }
+  "name": "cerberus",
+  "description": "upsmile(c) Distributor(TM) Cerberus front-end application",
+  "main": "",
+  "authors": [
+    "Dmitry Gordienko <d.gordienko@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "distributor",
+    "cerberus",
+    "upsmile"
+  ],
+  "homepage": "http://cerberus.upsmile.ua",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/assets/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "vaadin-core-elements": "^1.1.2",
+    "material-design-lite": "^1.2.1",
+    "paper-toolbar": "PolymerElements/paper-toolbar#^1.1.6",
+    "paper-drawer-panel": "PolymerElements/paper-drawer-panel#^1.0.10",
+    "paper-menu": "PolymerElements/paper-menu#^1.2.2",
+    "paper-item": "PolymerElements/paper-item#^1.2.1",
+    "app-layout": "PolymerElements/app-layout#^0.10.4",
+    "paper-header-panel": "PolymerElements/paper-header-panel#^1.1.6",
+    "chart.js": "^2.3.0",
+    "moment": "^2.15.1"
+  }
 }
