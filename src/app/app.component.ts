@@ -1,30 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { EndPointsServiceService } from './end-points-service.service';
+import { CurrentLicenseServiceService } from './current-license-service.service';
 import { IEndPoint } from './iend-point';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [EndPointsServiceService]
+  providers: [EndPointsServiceService, CurrentLicenseServiceService]
 })
 export class AppComponent implements OnInit {
   title = 'Distributor Cerberus';
   /**
    * Точки подключения и обслуживания
-   * 
+   *
    * @type {IEndPoint[]}
    * @memberOf AppComponent
    */
   endpoints: IEndPoint[];
-  constructor(private endpointssrv: EndPointsServiceService) {}
+  constructor(private endpointssrv: EndPointsServiceService) { }
 
   /**
    * Перемещение по элементам панели со ссылками
-   * 
+   *
    * @param {number} index
    * @param {IEndPoint} endpoint
    * @returns
-   * 
+   *
    * @memberOf AppComponent
    */
   trackByEndPoint(index: number, endpoint: IEndPoint) { return endpoint; }
@@ -34,8 +35,7 @@ export class AppComponent implements OnInit {
       .then(result => {
         this.endpoints = result;
         console.log(this.endpoints);
-      })
-      .catch(exception => console.log(exception));
- }
+      });
+  }
 }
 
