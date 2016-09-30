@@ -3,6 +3,9 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
+
 import { PolymerElement } from '@vaadin/angular2-polymer';
 
 import { AppComponent } from './app.component';

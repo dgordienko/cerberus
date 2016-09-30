@@ -3,16 +3,11 @@
         <div class="horizontal-section">
             <h6>Точки обслуживания</h6>
             <paper-menu>
-                <paper-item>Караван-Сарай</paper-item>
-                <paper-item>Макинвест</paper-item>
-                <paper-item>Лазурит</paper-item>
-                <paper-item>Купец</paper-item>
-                <paper-item>Алексеев</paper-item>
+                <paper-item *ngFor="let item of endpoints; let i=index">{{item.title}}</paper-item>
             </paper-menu>
         </div>
     </div>
     <div main>
-
         <header class="demo-header mdl-layout__header mdl-layout__header--scroll mdl-color--grey-100 mdl-color-text--grey-800">
             <paper-toolbar>
                 <paper-icon-button icon="menu" paper-drawer-toggle raised></paper-icon-button>
@@ -22,6 +17,8 @@
         </header>
         <div class="demo-ribbon"></div>
         <main class="demo-main mdl-layout__content">
+            <!--контент приложения -->
+
         </main>
 
     </div>

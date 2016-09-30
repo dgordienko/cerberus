@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {EndPointsServiceService} from './end-points-service.service';
-import {IEndPoint} from './iend-point';
+import { EndPointsServiceService } from './end-points-service.service';
+import { IEndPoint } from './iend-point';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,10 +8,7 @@ import {IEndPoint} from './iend-point';
   providers: [EndPointsServiceService]
 })
 export class AppComponent implements OnInit {
-  title = 'app works!';
-  myLabel = 'Select a number';
-  myValue = '4';
-  myItems = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  title = 'Distributor Cerberus';
   /**
    * Точки подключения и обслуживания
    * 
@@ -19,10 +16,26 @@ export class AppComponent implements OnInit {
    * @memberOf AppComponent
    */
   endpoints: IEndPoint[];
-  constructor(){
-    
-  }
-  ngOnInit() {
+  constructor(private endpointssrv: EndPointsServiceService) {}
 
-  }
+  /**
+   * Перемещение по элементам панели со ссылками
+   * 
+   * @param {number} index
+   * @param {IEndPoint} endpoint
+   * @returns
+   * 
+   * @memberOf AppComponent
+   */
+  trackByEndPoint(index: number, endpoint: IEndPoint) { return endpoint; }
+
+  ngOnInit() {
+    this.endpointssrv.getEndPoints()
+      .then(result => {
+        this.endpoints = result;
+        console.log(this.endpoints);
+      })
+      .catch(exception => console.log(exception));
+ }
 }
+
