@@ -6,12 +6,16 @@ import { HttpModule } from '@angular/http';
 import { PolymerElement } from '@vaadin/angular2-polymer';
 
 import { AppComponent } from './app.component';
+import { CurrentStatusComponentComponent } from './current-status-component/current-status-component.component';
+import { HistoryStatusComponentComponent } from './history-status-component/history-status-component.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PolymerElement('vaadin-date-picker'),
-    PolymerElement('vaadin-grid')
+    PolymerElement('vaadin-grid'),
+    CurrentStatusComponentComponent,
+    HistoryStatusComponentComponent
   ],
   imports: [
     BrowserModule,
