@@ -7,7 +7,6 @@ export class CurrentUsersServiceService {
   constructor(private http: Http) { }
   public getCurrentUsers(url: string) {
     this.url = url + '/api/cerber/users';
-    console.log(`Сервис получения текущих пользователей ${this.url}`);
     return Promise.resolve((this.http.get(this.url).map((response: Response) => response.json())).toPromise());
   }
 }

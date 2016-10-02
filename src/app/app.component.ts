@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { EndPointsServiceService } from './end-points-service.service';
-import { CurrentLicenseServiceService } from './current-license-service.service';
 import { IEndPoint } from './iend-point';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [EndPointsServiceService, CurrentLicenseServiceService]
+  providers: [EndPointsServiceService]
 })
 export class AppComponent implements OnInit {
   title = 'Distributor Cerberus';
@@ -17,6 +16,15 @@ export class AppComponent implements OnInit {
    * @memberOf AppComponent
    */
   endpoints: IEndPoint[];
+  /**
+   * Текущия точка подключения
+   */
+  public endpoint: IEndPoint = {
+    'id': 0,
+    'title': '',
+    'url': ''
+  };
+
   constructor(private endpointssrv: EndPointsServiceService) { }
 
   /**
@@ -34,7 +42,7 @@ export class AppComponent implements OnInit {
     this.endpointssrv.getEndPoints()
       .then(result => {
         this.endpoints = result;
-        console.log(this.endpoints);
+        this.endpoint = result[0];
       });
   }
 }

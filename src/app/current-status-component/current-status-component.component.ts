@@ -31,7 +31,6 @@ export class CurrentStatusComponentComponent implements OnInit {
     private users: CurrentUsersServiceService) {
     this.url = 'http://91.222.246.133:8085/distributor.cerber/DistributorCerber.svc';
   }
-
   ngOnInit() {
     /**
      * Получение текущих лицензий
