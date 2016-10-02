@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CurrentLicenseServiceService } from '../current-license-service.service';
 import { CurrentUsersServiceService } from '../current-users-service.service';
 import { ILicenseInfo } from '../ilicense-info';
-import { IDistributorUser } from '../idistributor-user';
+import { IDistributorUser, DistributorUser } from '../idistributor-user';
+import * as moment from 'moment';
+import 'moment/locale/ru.js';
 
 @Component({
   selector: 'app-current-status-component',
@@ -10,7 +12,6 @@ import { IDistributorUser } from '../idistributor-user';
   styleUrls: ['./current-status-component.component.css'],
   providers: [CurrentLicenseServiceService, CurrentUsersServiceService]
 })
-
 
 export class CurrentStatusComponentComponent implements OnInit {
   private url: string;
@@ -35,10 +36,26 @@ export class CurrentStatusComponentComponent implements OnInit {
     /**
      * Получение текущих лицензий
      */
-    this.license.getCurrentLicense(this.url).then((result: ILicenseInfo) => { this.License = result; });
+    this.license.getCurrentLicense(this.url).then((result: ILicenseInfo) => {
+      this.License = result;
+    });
+
     /**
      * Получение текщих подключенных пользователей
      */
-    this.users.getCurrentUsers(this.url).then((result: IDistributorUser[]) => { this.Users = result; });
+    this.users.getCurrentUsers(this.url).then((result: IDistributorUser[]) => {
+      let users: IDistributorUser[] = [];
+      moment.locale('rus');
+      result.forEach(element => {
+        let user = new DistributorUser();
+        user.LoginName = element.LoginName;
+        user.LogonTime = moment(element.LogonTime).toDate();
+        user.LogoffTime = moment(element.LogoffTime).toDate();
+        user.PersonId = element.PersonId;
+        user.UserKey = element.UserKey;
+        users.push(user);
+      });
+      this.Users = users;
+    });
   }
 }
