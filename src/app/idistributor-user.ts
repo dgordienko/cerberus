@@ -1,7 +1,7 @@
 export interface IDistributorUser {
     LoginName: string;
-    LogoffTime: Date;
-    LogonTime: Date;
+    LogoffTime: string;
+    LogonTime: string;
     PasswordKey: string;
     PersonId: number;
     UserKey: string;
@@ -9,8 +9,8 @@ export interface IDistributorUser {
 
 export class DistributorUser implements IDistributorUser {
     public LoginName: string;
-    public LogoffTime: Date;
-    public LogonTime: Date;
+    public LogoffTime: string;
+    public LogonTime: string;
     public PasswordKey: string;
     public PersonId: number;
     public UserKey: string;

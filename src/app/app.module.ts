@@ -3,6 +3,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { MomentModule } from 'angular2-moment';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 
 import 'rxjs/add/operator/map';
@@ -26,7 +27,8 @@ import { HistoryStatusComponentComponent } from './history-status-component/hist
     BrowserModule,
     FormsModule,
     HttpModule,
-    MomentModule
+    MomentModule,
+    ChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

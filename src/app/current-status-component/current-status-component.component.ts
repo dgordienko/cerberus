@@ -25,10 +25,14 @@ export class CurrentStatusComponentComponent implements OnInit {
    * Текущие подключенные пользователи
    */
   public Users: IDistributorUser[];
+  public displayedUsers: IDistributorUser[];
+
+  public chartlabels: string[] = ['Активно', 'Всего'];
+  public chartdata: number[] = [10, 1000];
+  public chartype: string = 'pie';
 
   constructor(
-    private license: CurrentLicenseServiceService,
-    private users: CurrentUsersServiceService) {
+    private license: CurrentLicenseServiceService, private users: CurrentUsersServiceService) {
     this.url = 'http://91.222.246.133:8085/distributor.cerber/DistributorCerber.svc';
   }
   ngOnInit() {
@@ -37,6 +41,8 @@ export class CurrentStatusComponentComponent implements OnInit {
      */
     this.license.getCurrentLicense(this.url).then((result: ILicenseInfo) => {
       this.License = result;
+      this.chartdata[0] = result.ActiveLicCount;
+      this.chartdata[1] = result.LicCount;
     });
 
     /**
@@ -48,13 +54,42 @@ export class CurrentStatusComponentComponent implements OnInit {
       result.forEach(element => {
         let user = new DistributorUser();
         user.LoginName = element.LoginName;
-        user.LogonTime = moment(element.LogonTime).toDate();
-        user.LogoffTime = moment(element.LogoffTime).toDate();
+        user.LogonTime = moment(element.LogonTime).format('dddd, Do MMMM, hh:mm').toString();
+        user.LogoffTime = moment(element.LogoffTime).format('dddd, Do MMMM, hh:mm').toString();
         user.PersonId = element.PersonId;
         user.UserKey = element.UserKey;
         users.push(user);
       });
       this.Users = users;
+      this.displayedUsers = users;
     });
+  }
+
+  sortUsers(event: any) {
+    const grid = event.target;
+    const sortOrder = grid.sortOrder[0];
+    const sortProperty = grid.columns[sortOrder.column].name;
+    const sortDirection = sortOrder.direction;
+    this.displayedUsers.sort((a, b) => {
+      let res: number;
+      let valueA: string = grid.get(sortProperty, a),
+        valueB: string = grid.get(sortProperty, b);
+      if (!(valueA == null)) {
+        res = parseInt(valueA, 10) - parseInt(valueB, 10);
+      } else {
+        res = valueA.localeCompare(valueB);
+      }
+      if (sortDirection === 'desc') {
+        res *= -1;
+      }
+      return res;
+    });
+  }
+
+  filterPeople(event: any) {
+    const filterText: string = (<HTMLInputElement>event.target).value.toLowerCase();
+    this.displayedUsers = this.Users.filter((person: IDistributorUser) =>
+      !filterText || person.LoginName.toLowerCase().indexOf(filterText) > -1
+    );
   }
 }
