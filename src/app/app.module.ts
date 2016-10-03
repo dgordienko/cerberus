@@ -20,6 +20,7 @@ import { HistoryStatusComponentComponent } from './history-status-component/hist
     AppComponent,
     PolymerElement('vaadin-date-picker'),
     PolymerElement('vaadin-grid'),
+    PolymerElement('paper-input'),
     CurrentStatusComponentComponent,
     HistoryStatusComponentComponent
   ],

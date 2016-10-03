@@ -1,5 +1,7 @@
-<!--<div class="mdl-grid">
+<div class="mdl-grid">
     <div class="mdl-cell mdl-cell--6-col">
+
+        <paper-input (keyup)="filterPeople($event)" label='Поиск'></paper-input>
         <vaadin-grid [items]="displayedUsers" (sort-order-changed)="sortUsers($event)">
             <table>
                 <colgroup>
@@ -18,4 +20,4 @@
     <div class="mdl-cell mdl-cell--6-col ">
         <base-chart class="chart " [data]="chartdata " [labels]="chartlabels " [chartType]="chartype "></base-chart>
     </div>
-</div>-->
+</div>

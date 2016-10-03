@@ -1,3 +1,24 @@
-<p>
-  history-status-component works!
-</p>
+<div class="mdl-grid">
+
+    <div class="mdl-cell mdl-cell--12-col">
+        <vaadin-date-picker label="Дата с"></vaadin-date-picker>
+        <vaadin-date-picker label="Дата по"></vaadin-date-picker>
+        <paper-input label='Поиск' (keyup)="filterPeople($event)"></paper-input>
+        <vaadin-grid [items]="displayedUsers" (sort-order-changed)="sortUsers($event)">
+            <table>
+                <colgroup>
+                    <col sortable name="LoginName">
+                    <col sortable name="LogoffTime">
+                    <col sortable name="LogonTime">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Пользователь</th>
+                        <th>Авторизирован</th>
+                        <th>Завершен сеанс</th>
+                    </tr>
+                </thead>
+            </table>
+        </vaadin-grid>
+    </div>
+</div>

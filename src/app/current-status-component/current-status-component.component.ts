@@ -66,23 +66,13 @@ export class CurrentStatusComponentComponent implements OnInit {
   }
 
   sortUsers(event: any) {
+
     const grid = event.target;
-    const sortOrder = grid.sortOrder[0];
-    const sortProperty = grid.columns[sortOrder.column].name;
-    const sortDirection = sortOrder.direction;
-    this.displayedUsers.sort((a, b) => {
-      let res: number;
-      let valueA: string = grid.get(sortProperty, a),
-        valueB: string = grid.get(sortProperty, b);
-      if (!(valueA == null)) {
-        res = parseInt(valueA, 10) - parseInt(valueB, 10);
-      } else {
-        res = valueA.localeCompare(valueB);
-      }
-      if (sortDirection === 'desc') {
-        res *= -1;
-      }
-      return res;
+    event.preventDefault();
+    let idx = grid.sortOrder[0].column;
+    let lesser = grid.sortOrder[0].direction === 'asc' ? -1 : 1;
+    this.displayedUsers.sort(function (a, b) {
+      return (a[idx] < b[idx]) ? lesser : -lesser;
     });
   }
 

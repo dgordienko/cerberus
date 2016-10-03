@@ -12,8 +12,8 @@ export class UsersHistoryServiceService {
   /**
    * Получение данных о истории подключенний пользователей
    */
-  getUsers(url: string, begin: number, end: number) {
-    this.url = url + this.url + `{${begin}}&end={${end}}`;
+  getUsers(url: string, begin: string, end: string) {
+    this.url = url + this.url + `${begin}&end=${end}`;
     console.log(`Ссылка на сервис с историей поключений ${this.url}`);
     return Promise.resolve((this.http.get(this.url).map((response: Response) => response.json())).toPromise());
   }

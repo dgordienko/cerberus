@@ -6,7 +6,7 @@
     <title>Cerberus</title>
     <base href="/">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <script src="assets/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
     <link rel="import" href="assets/bower_components/paper-styles/typography.html">
@@ -42,6 +42,7 @@
     <link rel="import" href="assets/bower_components/iron-icons/iron-icons.html">
     <link rel="import" href="assets/bower_components/paper-header-panel/paper-header-panel.html">
     <!--<link rel="import" href="assets/bower_components/paper-input/paper-input.html">-->
+    <link rel="import" href="assets/bower_components/paper-input/paper-input.html">
 
     <script src="assets/bower_components/moment/moment.js"></script>
     <script src="assets/bower_components/chart.js/dist/Chart.js"></script>
@@ -53,7 +54,7 @@
             @apply(--layout-wrap);
             padding: 40px;
         }
-
+        
         paper-header-panel {
             float: left;
             width: 240px;
@@ -61,7 +62,7 @@
             margin: 12px;
             @apply(--shadow-elevation-2dp);
         }
-
+        
         .paper-header {
             height: 60px;
             font-size: 16px;
@@ -70,78 +71,78 @@
             color: white;
             transition: height 0.2s;
         }
-
+        
         .paper-header.tall {
             height: 120px;
         }
-
+        
         .paper-header.medium-tall {
             height: 100px;
             line-height: 50px;
         }
-
+        
         .content {
             height: 2000px;
         }
-
+        
         .cover {
             margin: 60px;
         }
-
+        
         .blue .paper-header {
             background-color: var(--paper-light-blue-500);
         }
-
+        
         .red .paper-header {
             background-color: var(--paper-red-500);
         }
-
+        
         .orange .paper-header {
             background-color: var(--paper-amber-500);
         }
-
+        
         .green .paper-header {
             background-color: var(--paper-green-500);
         }
-
+        
         .cyan .paper-header {
             background-color: var(--paper-cyan-500);
         }
-
+        
         .lime .paper-header {
             background-color: var(--paper-lime-500);
         }
-
+        
         .pink .paper-header {
             background-color: var(--paper-pink-a200);
         }
         /* TODO: replace these with background: linear-gradient(white, var(...))
        when custom properties allow it */
-
+        
         .blue .content {
             background: linear-gradient(white, #b3e5fc);
         }
-
+        
         .red .content {
             background: linear-gradient(white, #ffcdd2);
         }
-
+        
         .orange .content {
             background: linear-gradient(white, #ffecb3);
         }
-
+        
         .green .content {
             background: linear-gradient(white, #c8e6c9);
         }
-
+        
         .cyan .content {
             background: linear-gradient(white, #b2ebf2);
         }
-
+        
         .lime .content {
             background: linear-gradient(white, #f0f4c3);
         }
-
+        
         .pink .content {
             background: linear-gradient(white, #f8bbd0);
         }
