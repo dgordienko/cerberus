@@ -19,8 +19,14 @@ export class HistoryStatusComponentComponent implements OnInit {
   public Users: IDistributorUser[];
   public displayedUsers: IDistributorUser[];
 
+  public currentUserCount: number;
+  public currentUserFilteredCount: number;
+
   private begin: Date = moment().add('day', -5).toDate();
   private end: Date = moment().add('day', ).toDate();
+
+  public beginValue: string = moment(this.begin).format('l');
+  public endValue: string = moment(this.begin).format('l');
 
   constructor(private history: UsersHistoryServiceService) { }
 
@@ -35,16 +41,17 @@ export class HistoryStatusComponentComponent implements OnInit {
       result.forEach(element => {
         let user = new DistributorUser();
         user.LoginName = element.LoginName;
-        user.LogonTime = moment(element.LogonTime).format('dddd, Do MMMM, hh:mm').toString();
-        user.LogoffTime = moment(element.LogoffTime).format('dddd, Do MMMM, hh:mm').toString();
+        user.LogonTime = moment(element.LogonTime).fromNow();
         user.PersonId = element.PersonId;
         user.UserKey = element.UserKey;
         users.push(user);
       });
       this.Users = users;
       this.displayedUsers = users;
+      this.currentUserCount = this.currentUserFilteredCount = users.length;
     }).catch(exeption => console.log(exeption));
   }
+
   sortUsers(event: any) {
     const grid = event.target;
     const sortOrder = grid.sortOrder[0];
@@ -71,6 +78,7 @@ export class HistoryStatusComponentComponent implements OnInit {
     this.displayedUsers = this.Users.filter((person: IDistributorUser) =>
       !filterText || person.LoginName.toLowerCase().indexOf(filterText) > -1
     );
+    this.currentUserFilteredCount = this.displayedUsers.length;
   }
 
   toDate(jsDate): string {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EndPointsServiceService } from './end-points-service.service';
 import { IEndPoint } from './iend-point';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

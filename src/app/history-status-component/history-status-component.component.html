@@ -1,15 +1,32 @@
 <div class="mdl-grid">
-
     <div class="mdl-cell mdl-cell--12-col">
-        <vaadin-date-picker label="Дата с"></vaadin-date-picker>
-        <vaadin-date-picker label="Дата по"></vaadin-date-picker>
-        <paper-input label='Поиск' (keyup)="filterPeople($event)"></paper-input>
+        <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--3-col">
+                <vaadin-date-picker label="Дата с" [(value)]="beginValue"></vaadin-date-picker>
+            </div>
+            <div class="mdl-cell mdl-cell--3-col">
+                <vaadin-date-picker label="по" [(value)]="endValue"></vaadin-date-picker>
+            </div>
+            <div class="mdl-cell mdl-cell--6-col">
+                <paper-input label='Поиск' (keyup)="filterPeople($event)"></paper-input>
+            </div>
+        </div>
+        <div class="loader-inner ball-spin-fade-loader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
         <vaadin-grid [items]="displayedUsers" (sort-order-changed)="sortUsers($event)">
             <table>
                 <colgroup>
                     <col sortable name="LoginName">
-                    <col sortable name="LogoffTime">
                     <col sortable name="LogonTime">
+                    <col sortable name="LogoffTime">
                 </colgroup>
                 <thead>
                     <tr>
@@ -20,5 +37,9 @@
                 </thead>
             </table>
         </vaadin-grid>
+        <span class="mdl-chip">
+            <span class="mdl-chip__text">Показано {{currentUserFilteredCount}} из {{currentUserCount}} записей</span>
+        </span>
+
     </div>
 </div>

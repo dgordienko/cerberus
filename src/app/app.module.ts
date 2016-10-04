@@ -14,6 +14,8 @@ import { PolymerElement } from '@vaadin/angular2-polymer';
 import { AppComponent } from './app.component';
 import { CurrentStatusComponentComponent } from './current-status-component/current-status-component.component';
 import { HistoryStatusComponentComponent } from './history-status-component/history-status-component.component';
+import { ChartModule } from 'angular2-highcharts';
+
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import { HistoryStatusComponentComponent } from './history-status-component/hist
     PolymerElement('vaadin-date-picker'),
     PolymerElement('vaadin-grid'),
     PolymerElement('paper-input'),
+    PolymerElement('paper-badge'),
     CurrentStatusComponentComponent,
     HistoryStatusComponentComponent
   ],
@@ -29,7 +32,8 @@ import { HistoryStatusComponentComponent } from './history-status-component/hist
     FormsModule,
     HttpModule,
     MomentModule,
-    ChartsModule
+    ChartsModule,
+    ChartModule
   ],
   providers: [],
   bootstrap: [AppComponent],

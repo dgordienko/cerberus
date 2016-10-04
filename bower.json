@@ -30,6 +30,9 @@
     "app-layout": "PolymerElements/app-layout#^0.10.4",
     "paper-header-panel": "PolymerElements/paper-header-panel#^1.1.6",
     "chart.js": "^2.3.0",
-    "moment": "^2.15.1"
+    "moment": "^2.15.1",
+    "paper-badge": "PolymerElements/paper-badge#^1.1.4",
+    "vaadin-icons": "^1.0.2",
+    "loaders.css": "^0.1.2"
   }
 }
