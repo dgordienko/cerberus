@@ -8,6 +8,9 @@ export class CurrentLicenseServiceService {
   public licInfo: ILicenseInfo;
   constructor(private http: Http) { }
 
+  /**
+   * Вызов сервиса получения данных о подключенных пользователях
+   */
   public getCurrentLicense(url: string) {
     this.url = url + '/api/cerber/licences';
     console.log(`Сервис получения лицензий ${this.url}`);

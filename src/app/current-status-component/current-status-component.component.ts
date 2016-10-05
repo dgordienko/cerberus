@@ -62,6 +62,9 @@ export class CurrentStatusComponentComponent implements OnInit {
    */
   public allUsers: number;
 
+
+  private options: HighchartsOptions;
+
   constructor(
     private license: CurrentLicenseServiceService, private users: CurrentUsersServiceService) {
     this.url = 'http://91.222.246.133:8085/distributor.cerber/DistributorCerber.svc';
@@ -97,6 +100,49 @@ export class CurrentStatusComponentComponent implements OnInit {
       this.usedLicense = users.length;
       this.chartdata[0] = this.usedLicense;
       this.chartdata[1] = this.allLicense;
+      /**
+       * Конфигурация круговой диаграммы по состоянию лицензирования
+       */
+      this.options = {
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: 'pie'
+        },
+        title: {
+          text: ``
+        },
+        tooltip: {
+          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: true,
+              format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+              style: {
+                color: 'black'
+              }
+            }
+          }
+        },
+        series: [{
+          name: 'Лицензии',
+          data: [{
+            name: 'Использовано',
+            y: this.usedLicense
+          }, {
+            name: 'Осталось',
+            y: this.allLicense,
+            sliced: true,
+            selected: true
+          }]
+        }]
+      };
+
     });
   }
 

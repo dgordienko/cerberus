@@ -1,5 +1,5 @@
 <div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--6-col">
+    <div class="mdl-cell mdl-cell--5-col">
         <paper-input (keyup)="filterPeople($event)" label='Поиск'></paper-input>
         <vaadin-grid [items]="displayedUsers" (sort-order-changed)="sortUsers($event)">
             <table>
@@ -19,24 +19,18 @@
             <span class="mdl-chip__text">Показано {{currentUserFilteredCount}} из {{currentUserCount}} лицензий</span>
         </span>
     </div>
-    <div class="mdl-cell mdl-cell--6-col ">
-        <base-chart class="chart " [data]="chartdata " [labels]="chartlabels " [chartType]="chartype "></base-chart>
-        <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--2-col "></div>
-            <div class="mdl-cell mdl-cell--6-col ">
-                <div class="demo-md-info">
-                    <div class="mdl-chip">
-                        <span class="mdl-chip__text">Активно лицензий {{usedLicense}}</span>
-                    </div>
-                    <div class="mdl-chip">
-                        <span class="mdl-chip__text">Выдано лицензий {{allLicense}}</span>
-                    </div>
-                    <div class="mdl-chip">
-                        <span class="mdl-chip__text">Активно пользователей {{allUsers}}</span>
-                    </div>
-                </div>
-            </div>
-            <div class="mdl-cell mdl-cell--2-col "></div>
-        </div>
+    <div class="mdl-cell mdl-cell--7-col ">
+        <!--<base-chart class="chart " [data]="chartdata " [labels]="chartlabels " [chartType]="chartype "></base-chart>-->
+
+        <chart [options]="options"></chart>
+        <span class="mdl-chip">
+            <span class="mdl-chip__text">Активно лицензий {{usedLicense}}</span>
+        </span>
+        <span class="mdl-chip">
+            <span class="mdl-chip__text">Выдано лицензий {{allLicense}}</span>
+        </span>
+        <span class="mdl-chip">
+            <span class="mdl-chip__text">Активно пользователей {{allUsers}}</span>
+        </span>
     </div>
 </div>

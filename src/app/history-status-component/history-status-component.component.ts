@@ -41,7 +41,8 @@ export class HistoryStatusComponentComponent implements OnInit {
       result.forEach(element => {
         let user = new DistributorUser();
         user.LoginName = element.LoginName;
-        user.LogonTime = moment(element.LogonTime).fromNow();
+        user.LogonTime = moment(element.LogonTime).format('dddd, Do MMMM, hh:mm').toString();
+        user.LogoffTime = moment(element.LogoffTime).format('dddd, Do MMMM, hh:mm').toString();
         user.PersonId = element.PersonId;
         user.UserKey = element.UserKey;
         users.push(user);

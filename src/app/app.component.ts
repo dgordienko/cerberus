@@ -9,7 +9,7 @@ import { IEndPoint } from './iend-point';
   providers: [EndPointsServiceService]
 })
 export class AppComponent implements OnInit {
-  title = 'Distributor Cerberus';
+  title = 'Distributor.Cerberus';
   /**
    * Точки подключения и обслуживания
    *
@@ -44,6 +44,7 @@ export class AppComponent implements OnInit {
       .then(result => {
         this.endpoints = result;
         this.endpoint = result[0];
+        this.title += `${'\\'}${result[0].title}`;
       });
   }
 }
