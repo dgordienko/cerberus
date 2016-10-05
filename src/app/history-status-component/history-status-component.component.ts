@@ -13,6 +13,16 @@ import { IDistributorUser, DistributorUser } from '../idistributor-user';
 })
 export class HistoryStatusComponentComponent implements OnInit {
 
+
+  /**
+   *Конфигурация диаграммы активных лицензий
+   *
+   * @private
+   * @type {HighchartsOptions}
+   * @memberOf CurrentStatusComponentComponent
+   */
+  private options: HighchartsOptions;
+
   /**
    * Текущие подключенные пользователи
    */
@@ -33,7 +43,12 @@ export class HistoryStatusComponentComponent implements OnInit {
   ngOnInit() {
     let bd = this.toDate(this.begin);
     let ed = this.toDate(this.end);
-    let url = 'http://91.222.246.133:8085/distributor.cerber/DistributorCerber.svc/';
+
+    /**
+     *locale development server
+     */
+    let url = 'http://192.168.68.5:8111/distributor.cerberus/DistributorCerber.svc';
+
     console.log(url);
     this.history.getUsers(url, bd, ed).then((result: IDistributorUser[]) => {
       let users: IDistributorUser[] = [];
@@ -50,7 +65,41 @@ export class HistoryStatusComponentComponent implements OnInit {
       this.Users = users;
       this.displayedUsers = users;
       this.currentUserCount = this.currentUserFilteredCount = users.length;
-    }).catch(exeption => console.log(exeption));
+      this.options = {
+        chart: {
+          zoomType: 'xy'
+        },
+        title: { text: 'test simple chart' },
+        series: [{
+          type: 'line',
+          data: [
+            [-1743913407000, 29.5],
+            [-1743813407000, 28.5],
+            [-1743713407000, 27.5],
+            [-1743613407000, 26.5],
+            [-1743513407000, 25.5],
+            [-1743413407000, 24.5],
+            [-1743313407000, 23.5],
+            [-1743213407000, 22.5],
+            [-1743113407000, 20.5],
+            [-1743013407000, 21.5],
+            [-1742913407000, 22.5],
+            [-1742813407000, 23.5],
+            [-1742713407000, 24.5],
+            [-1742613407000, 25.5],
+            [-1742513407000, 26.5],
+            [-1742413407000, 27.5],
+            [-1742313407000, 28.5],
+            [-1742213407000, 29.5]
+          ]
+        }],
+        xAxis: {
+          type: 'datetime',
+        }
+      };
+
+    })
+      .catch(exeption => console.log(exeption));
   }
 
   sortUsers(event: any) {

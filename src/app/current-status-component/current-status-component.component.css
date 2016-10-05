@@ -1,3 +1,7 @@
 vaadin-grid {
     height: 300px;
 }
+
+chart {
+    display: block;
+}

@@ -21,21 +21,20 @@ export class CurrentStatusComponentComponent implements OnInit {
   /**
    * Текущие лицензии
    */
-  public License: ILicenseInfo;
+  private License: ILicenseInfo;
 
   /**
    * Текущие подключенные пользователи
    */
-  public Users: IDistributorUser[];
-  public displayedUsers: IDistributorUser[];
+  private Users: IDistributorUser[];
+  private displayedUsers: IDistributorUser[];
 
-  public chartlabels: string[] = ['Активно', 'Всего'];
-  public chartdata: number[] = [10, 1000];
-  public chartype: string = 'pie';
+  // private chartlabels: string[] = ['Активно', 'Всего'];
+  // private chartdata: number[] = [10, 1000];
+  // private chartype: string = 'pie';
 
-  public currentUserCount: number;
-  public currentUserFilteredCount: number;
-
+  private currentUserCount: number;
+  private currentUserFilteredCount: number;
 
 
   /**
@@ -44,7 +43,7 @@ export class CurrentStatusComponentComponent implements OnInit {
    * @type {number}
    * @memberOf CurrentStatusComponentComponent
    */
-  public allLicense: number;
+  private allLicense: number;
 
   /**
    *Использовано лицензий
@@ -52,7 +51,7 @@ export class CurrentStatusComponentComponent implements OnInit {
    * @type {number}
    * @memberOf CurrentStatusComponentComponent
    */
-  public usedLicense: number;
+  private usedLicense: number;
 
   /**
    *Всего пользователей
@@ -60,9 +59,15 @@ export class CurrentStatusComponentComponent implements OnInit {
    * @type {number}
    * @memberOf CurrentStatusComponentComponent
    */
-  public allUsers: number;
+  private allUsers: number;
 
-
+  /**
+   *Конфигурация диаграммы активных лицензий
+   *
+   * @private
+   * @type {HighchartsOptions}
+   * @memberOf CurrentStatusComponentComponent
+   */
   private options: HighchartsOptions;
 
   constructor(
@@ -89,7 +94,6 @@ export class CurrentStatusComponentComponent implements OnInit {
         let user = new DistributorUser();
         user.LoginName = element.LoginName;
         user.LogonTime = moment(element.LogonTime).fromNow();
-        // user.LogoffTime = moment(element.LogoffTime).format('dddd, Do MMMM, hh:mm').toString();
         user.PersonId = element.PersonId;
         user.UserKey = element.UserKey;
         users.push(user);
@@ -98,12 +102,12 @@ export class CurrentStatusComponentComponent implements OnInit {
       this.displayedUsers = users;
       this.currentUserCount = this.currentUserFilteredCount = users.length;
       this.usedLicense = users.length;
-      this.chartdata[0] = this.usedLicense;
-      this.chartdata[1] = this.allLicense;
+
       /**
        * Конфигурация круговой диаграммы по состоянию лицензирования
        */
       this.options = {
+        colors: ['#FF4081', '#3F51B5'],
         chart: {
           plotBackgroundColor: null,
           plotBorderWidth: null,
@@ -111,10 +115,11 @@ export class CurrentStatusComponentComponent implements OnInit {
           type: 'pie'
         },
         title: {
-          text: ``
+          text: this.License.Description
+
         },
         tooltip: {
-          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+          pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>'
         },
         plotOptions: {
           pie: {
@@ -122,7 +127,7 @@ export class CurrentStatusComponentComponent implements OnInit {
             cursor: 'pointer',
             dataLabels: {
               enabled: true,
-              format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+              format: '<b>{series.name} {point.name}</b>: {point.percentage:.1f} %',
               style: {
                 color: 'black'
               }
@@ -130,12 +135,12 @@ export class CurrentStatusComponentComponent implements OnInit {
           }
         },
         series: [{
-          name: 'Лицензии',
+          name: 'Лицензий',
           data: [{
-            name: 'Использовано',
+            name: 'использовано',
             y: this.usedLicense
           }, {
-            name: 'Осталось',
+            name: 'осталось',
             y: this.allLicense,
             sliced: true,
             selected: true
@@ -146,6 +151,13 @@ export class CurrentStatusComponentComponent implements OnInit {
     });
   }
 
+  /**
+   *Сортировка таблици подключенных пользователей
+   *
+   * @param {*} event
+   *
+   * @memberOf CurrentStatusComponentComponent
+   */
   sortUsers(event: any) {
     const grid = event.target;
     event.preventDefault();
@@ -156,6 +168,13 @@ export class CurrentStatusComponentComponent implements OnInit {
     });
   }
 
+  /**
+   *Фильтрация таблици подключенных пользователей
+   *
+   * @param {*} event
+   *
+   * @memberOf CurrentStatusComponentComponent
+   */
   filterPeople(event: any) {
     const filterText: string = (<HTMLInputElement>event.target).value.toLowerCase();
     this.displayedUsers = this.Users.filter((person: IDistributorUser) =>

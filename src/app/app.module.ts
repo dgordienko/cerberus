@@ -24,6 +24,7 @@ import { ChartModule } from 'angular2-highcharts';
     PolymerElement('vaadin-grid'),
     PolymerElement('paper-input'),
     PolymerElement('paper-badge'),
+    PolymerElement('paper-button'),
     CurrentStatusComponentComponent,
     HistoryStatusComponentComponent
   ],

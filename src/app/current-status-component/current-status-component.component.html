@@ -1,5 +1,21 @@
 <div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--5-col">
+    <div class="mdl-cell mdl-cell--8-col ">
+        <chart [options]="options"></chart>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col ">
+        <span class="mdl-chip">
+            <span class="mdl-chip__text">Активно лицензий {{usedLicense}}</span>
+        </span>
+        <span class="mdl-chip">
+            <span class="mdl-chip__text">Выдано лицензий {{allLicense}}</span>
+        </span>
+        <span class="mdl-chip">
+            <span class="mdl-chip__text">Активно пользователей {{allUsers}}</span>
+        </span>
+    </div>
+</div>
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col">
         <paper-input (keyup)="filterPeople($event)" label='Поиск'></paper-input>
         <vaadin-grid [items]="displayedUsers" (sort-order-changed)="sortUsers($event)">
             <table>
@@ -16,21 +32,8 @@
             </table>
         </vaadin-grid>
         <span class="mdl-chip">
-            <span class="mdl-chip__text">Показано {{currentUserFilteredCount}} из {{currentUserCount}} лицензий</span>
+            <span class="mdl-chip__text">Показано {{currentUserFilteredCount}} из {{currentUserCount}} активных лицензий</span>
         </span>
     </div>
-    <div class="mdl-cell mdl-cell--7-col ">
-        <!--<base-chart class="chart " [data]="chartdata " [labels]="chartlabels " [chartType]="chartype "></base-chart>-->
 
-        <chart [options]="options"></chart>
-        <span class="mdl-chip">
-            <span class="mdl-chip__text">Активно лицензий {{usedLicense}}</span>
-        </span>
-        <span class="mdl-chip">
-            <span class="mdl-chip__text">Выдано лицензий {{allLicense}}</span>
-        </span>
-        <span class="mdl-chip">
-            <span class="mdl-chip__text">Активно пользователей {{allUsers}}</span>
-        </span>
-    </div>
 </div>

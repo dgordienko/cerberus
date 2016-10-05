@@ -1,25 +1,22 @@
 <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--12-col">
+
+    </div>
+</div>
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col">
+        <chart [options]="options"></chart>
+    </div>
+</div>
+
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col">
         <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--3-col">
-                <vaadin-date-picker label="Дата с"></vaadin-date-picker>
-            </div>
-            <div class="mdl-cell mdl-cell--3-col">
-                <vaadin-date-picker label="по"></vaadin-date-picker>
-            </div>
             <div class="mdl-cell mdl-cell--6-col">
                 <paper-input label='Поиск' (keyup)="filterPeople($event)"></paper-input>
             </div>
-        </div>
-        <div class="loader-inner ball-spin-fade-loader">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+            <div class="mdl-cell mdl-cell--6-col">
+            </div>
         </div>
         <vaadin-grid [items]="displayedUsers" (sort-order-changed)="sortUsers($event)">
             <table>

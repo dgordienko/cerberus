@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
       .then(result => {
         this.endpoints = result;
         this.endpoint = result[0];
-        this.title += `${'\\'}${result[0].title}`;
+        this.title = `${result[0].title}`;
       });
   }
 }
