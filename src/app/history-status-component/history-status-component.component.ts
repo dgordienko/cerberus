@@ -3,7 +3,7 @@ import * as moment from 'moment';
 import 'moment/locale/ru.js';
 import { UsersHistoryServiceService } from '../users-history-service.service';
 import { IDistributorUser, DistributorUser } from '../idistributor-user';
-
+import { IDistributorLicenceInfo } from '../idistributor-licence-info';
 
 @Component({
   selector: 'app-history-status-component',
@@ -32,8 +32,8 @@ export class HistoryStatusComponentComponent implements OnInit {
   public currentUserCount: number;
   public currentUserFilteredCount: number;
 
-  private begin: Date = moment().add('day', -5).toDate();
-  private end: Date = moment().add('day', ).toDate();
+  private begin: Date = moment().toDate();
+  private end: Date = moment().toDate();
 
   public beginValue: string = moment(this.begin).format('l');
   public endValue: string = moment(this.begin).format('l');
@@ -41,15 +41,15 @@ export class HistoryStatusComponentComponent implements OnInit {
   constructor(private history: UsersHistoryServiceService) { }
 
   ngOnInit() {
+    this.begin.setHours(0, 0, 0, 0);
     let bd = this.toDate(this.begin);
     let ed = this.toDate(this.end);
 
     /**
      *locale development server
      */
-    let url = 'http://192.168.68.5:8111/distributor.cerberus/DistributorCerber.svc';
-
-    console.log(url);
+    let url = 'http://91.222.246.133:8085/distributor.cerber/DistributorCerber.svc';
+    // console.log(url);
     this.history.getUsers(url, bd, ed).then((result: IDistributorUser[]) => {
       let users: IDistributorUser[] = [];
       moment.locale('rus');
@@ -65,41 +65,43 @@ export class HistoryStatusComponentComponent implements OnInit {
       this.Users = users;
       this.displayedUsers = users;
       this.currentUserCount = this.currentUserFilteredCount = users.length;
+
+
+    }).catch(exeption => console.log(exeption));
+
+    this.history.getUsersLicenseInfo(url, bd, ed).then((result: IDistributorLicenceInfo[]) => {
+      let data: [number, number][] = [];
+      let rslt: [moment.Moment, number][] = [];
+
+      for (let index = 0; index < result.length; index++) {
+        let element = result[index];
+        let dt = moment(element.Time);
+        let cnt = element.Count;
+        rslt.push([dt, cnt]);
+      }
+      console.log(rslt);
+      result.forEach(element => {
+        let dateValue = +moment(element.Time);
+        let countValue = element.Count;
+        data.push([dateValue, countValue]);
+      });
+      console.log(data);
       this.options = {
         chart: {
           zoomType: 'xy'
         },
-        title: { text: 'test simple chart' },
+        title: { text: 'На дату: ' + moment(this.begin).format('dddd, Do MMMM') },
         series: [{
           type: 'line',
-          data: [
-            [-1743913407000, 29.5],
-            [-1743813407000, 28.5],
-            [-1743713407000, 27.5],
-            [-1743613407000, 26.5],
-            [-1743513407000, 25.5],
-            [-1743413407000, 24.5],
-            [-1743313407000, 23.5],
-            [-1743213407000, 22.5],
-            [-1743113407000, 20.5],
-            [-1743013407000, 21.5],
-            [-1742913407000, 22.5],
-            [-1742813407000, 23.5],
-            [-1742713407000, 24.5],
-            [-1742613407000, 25.5],
-            [-1742513407000, 26.5],
-            [-1742413407000, 27.5],
-            [-1742313407000, 28.5],
-            [-1742213407000, 29.5]
-          ]
+          // name : 'Лицензии',          
+          data: data
         }],
         xAxis: {
           type: 'datetime',
         }
       };
 
-    })
-      .catch(exeption => console.log(exeption));
+    });
   }
 
   sortUsers(event: any) {
@@ -135,6 +137,6 @@ export class HistoryStatusComponentComponent implements OnInit {
     let jsdate = jsDate || new Date();
     let timezoneOffset = jsdate.getTimezoneOffset() / (60 * 24);
     let msDateObj = (jsdate.getTime() / 86400000) + (25569 - timezoneOffset);
-    return msDateObj.toFixed();
+    return msDateObj.toString();
   }
 }

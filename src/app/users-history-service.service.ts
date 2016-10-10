@@ -7,14 +7,31 @@ export class UsersHistoryServiceService {
   /**
    * Ссылка на хост службы
    */
-  private url = '/api/cerber/users/?begin=';
+  private urlUsers = '/api/cerber/users/?begin=';
+  private urlLicese = '/api/cerber/licences/?begin=';
   constructor(private http: Http) { }
   /**
    * Получение данных о истории подключенний пользователей
    */
   getUsers(url: string, begin: string, end: string) {
-    this.url = url + this.url + `${begin}&end=${end}`;
-    console.log(`Ссылка на сервис с историей поключений ${this.url}`);
-    return Promise.resolve((this.http.get(this.url).map((response: Response) => response.json())).toPromise());
+    this.urlUsers = url + this.urlUsers + `${begin}&end=${end}`;
+    console.log(`Ссылка на сервис с историей поключений ${this.urlUsers}`);
+    return Promise.resolve((this.http.get(this.urlUsers).map((response: Response) => response.json())).toPromise());
+  };
+
+ /**
+  * Получение данных о истории использования лицензий
+  * 
+  * @param {any} url
+  * @param {any} begin
+  * @param {string} end
+  * @returns
+  * 
+  * @memberOf UsersHistoryServiceService
+  */
+  getUsersLicenseInfo(url, begin, end: string) {
+    this.urlLicese = url + this.urlLicese + `${begin}&end=${end}`;
+    console.log(`Ссылка на сервис с историей использования лицензий ${this.urlLicese}`);
+    return Promise.resolve((this.http.get(this.urlLicese).map((response: Response) => response.json())).toPromise());
   }
 }
