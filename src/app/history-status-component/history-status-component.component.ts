@@ -53,283 +53,13 @@ export class HistoryStatusComponentComponent implements OnInit {
 
 
   /**
-   * Получение текущих поключенных пользователей
-   * @private
-   * 
-   * @memberOf HistoryStatusComponentComponent
-   */
-  private getCurrentLicence() {
-    this.current.getCurrentLicense(this.url).then((result: ILicenseInfo) => {
-      this.License = result;
-      this.allLicense = result.LicCount;
-      this.allUsers = result.ActiveLicCount;
-    });
-  };
-
-  /**
    * Получение данных для построения линейного графика подключений пользователей за день
    * 
    * @private
    * 
    * @memberOf HistoryStatusComponentComponent
    */
-  private getLineCahartData() {
-
-  }
-  /**
-   * Получение данных для построения круговой диаграммы статуса текущих подключенных пользователей
-   * 
-   * @private
-   * 
-   * @memberOf HistoryStatusComponentComponent
-   */
-  private getPieChartData() {
-    this.current.getCurrentLicense(this.url).then((l: ILicenseInfo) => {
-      this.License = l;
-          /**
-   * Получение текщих подключенных лицензий
-   */
-    this.users.getCurrentLicenceStatus(this.url).then((result: IDistributorUser[]) => {
-
-      let users: IDistributorUser[] = [];
-      moment.locale('rus');
-      result.forEach(element => {
-        let user = new DistributorUser();
-        user.LoginName = element.LoginName;
-        user.LogonTime = moment(element.LogonTime).fromNow();
-        user.PersonId = element.PersonId;
-        user.UserKey = element.UserKey;
-        users.push(user);
-      });
-      this.currentUserCount = users.length;
-      this.usedLicense = users.length;
-
-      /**
-       * Конфигурация круговой диаграммы по состоянию лицензирования
-       */
-      this.optionsPieGraph = {
-        colors: ['#FF4081', '#3F51B5'],
-        chart: {
-          plotBackgroundColor: null,
-          plotBorderWidth: null,
-          plotShadow: false,
-          type: 'pie'
-        },
-        title: {
-          text: this.License.Description
-
-        },
-        tooltip: {
-          pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
-          pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-              enabled: true,
-              format: '<b>{series.name} {point.name}</b>: {point.percentage:.1f} %',
-              style: {
-                color: 'black'
-              }
-            }
-          }
-        },
-        series: [{
-          name: 'Лицензий',
-          data: [{
-            name: 'использовано',
-            y: this.usedLicense
-          }, {
-            name: 'осталось',
-            y: this.allLicense,
-            sliced: true,
-            selected: true
-          }]
-        }]
-      };
-    });
-    }).catch((exception) => console.log(exception));
-
-
-  }
-
-
-
-  /**
-   * Получение текущих подключенных пользователей
-   * 
-   * @private
-   * 
-   * @memberOf HistoryStatusComponentComponent
-   */
-  private getLicences() {
-    /**
-     * Получение текщих подключенных лицензий
-     */
-    this.users.getCurrentLicenceStatus(this.url).then((result: IDistributorUser[]) => {
-      let users: IDistributorUser[] = [];
-      moment.locale('rus');
-      result.forEach(element => {
-        let user = new DistributorUser();
-        user.LoginName = element.LoginName;
-        user.LogonTime = moment(element.LogonTime).fromNow();
-        user.PersonId = element.PersonId;
-        user.UserKey = element.UserKey;
-        users.push(user);
-      });
-      this.Users = users;
-      this.gridDataSet = users;
-      this.currentUserCount = this.currentUserFilteredCount = users.length;
-      this.usedLicense = users.length;
-
-      /**
-       * Конфигурация круговой диаграммы по состоянию лицензирования
-       */
-      this.optionsPieGraph = {
-        colors: ['#FF4081', '#3F51B5'],
-        chart: {
-          plotBackgroundColor: null,
-          plotBorderWidth: null,
-          plotShadow: false,
-          type: 'pie'
-        },
-        title: {
-          text: this.License.Description
-
-        },
-        tooltip: {
-          pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
-          pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-              enabled: true,
-              format: '<b>{series.name} {point.name}</b>: {point.percentage:.1f} %',
-              style: {
-                color: 'black'
-              }
-            }
-          }
-        },
-        series: [{
-          name: 'Лицензий',
-          data: [{
-            name: 'использовано',
-            y: this.usedLicense
-          }, {
-            name: 'осталось',
-            y: this.allLicense,
-            sliced: true,
-            selected: true
-          }]
-        }]
-      };
-
-    });
-  }
-
-  /**
-  * Получение текщих подключенных пользователей
-  */
-  private GetCurrentConnectedUsers() {
-    this.users.getCurrentLicenceStatus(this.url).then((result: IDistributorUser[]) => {
-      let users: IDistributorUser[] = [];
-      moment.locale('rus');
-      result.forEach(element => {
-        let user = new DistributorUser();
-        user.LoginName = element.LoginName;
-        user.LogonTime = moment(element.LogonTime).fromNow();
-        user.PersonId = element.PersonId;
-        user.UserKey = element.UserKey;
-        users.push(user);
-      });
-      /**
-       * Все пользователи загруженные в форму с данными
-       */
-      this.Users = users;
-      this.gridDataSet = users;
-      this.currentUserCount = this.currentUserFilteredCount = users.length;
-      this.usedLicense = users.length;
-
-      /**
-       * Конфигурация круговой диаграммы по состоянию лицензирования
-       */
-      this.optionsPieGraph = {
-        colors: ['#FF4081', '#3F51B5'],
-        chart: {
-          plotBackgroundColor: null,
-          plotBorderWidth: null,
-          plotShadow: false,
-          type: 'pie'
-        },
-        title: {
-          text: this.License.Description
-
-        },
-        tooltip: {
-          pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
-          pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-              enabled: true,
-              format: '<b>{series.name} {point.name}</b>: {point.percentage:.1f} %',
-              style: {
-                color: 'black'
-              }
-            }
-          }
-        },
-        series: [{
-          name: 'Лицензий',
-          data: [{
-            name: 'использовано',
-            y: this.usedLicense
-          }, {
-            name: 'осталось',
-            y: this.allLicense,
-            sliced: true,
-            selected: true
-          }]
-        }]
-      };
-
-    });
-  }
-
-  /**
-   * Получение всех пользователей
-   */
-  private GeUsers(url, bd, ed) {
-
-    this.history.getUsers(url, bd, ed).then((result: IDistributorUser[]) => {
-      let users: IDistributorUser[] = [];
-      moment.locale('rus');
-      result.forEach(element => {
-        let user = new DistributorUser();
-        user.LoginName = element.LoginName;
-        user.LogonTime = moment(element.LogonTime).format('dddd, Do MMMM, hh:mm').toString();
-        user.LogoffTime = moment(element.LogoffTime).format('dddd, Do MMMM, hh:mm').toString();
-        user.PersonId = element.PersonId;
-        user.UserKey = element.UserKey;
-        users.push(user);
-      });
-      this.Users = users;
-      this.gridDataSet = users;
-      this.currentUserCount = this.currentUserFilteredCount = users.length;
-    }).catch(exeption => console.log(exeption));
-  }
-
-  /**
- * Получение информации о пользовательских лицензиях
- */
-  private GetLicencesInfo(url, bd, ed) {
-
+  private getLineCahartData(url, bd, ed) {
     this.history.getUsersLicenseInfo(url, bd, ed).then((result: IDistributorLicenceInfo[]) => {
       let data: [number, number][] = [];
       let rslt: [moment.Moment, number][] = [];
@@ -360,6 +90,84 @@ export class HistoryStatusComponentComponent implements OnInit {
 
     });
   }
+  /**
+   * Получение данных для построения круговой диаграммы статуса текущих подключенных пользователей
+   * 
+   * @private
+   * 
+   * @memberOf HistoryStatusComponentComponent
+   */
+  private getPieChartData() {
+    this.current.getCurrentLicense(this.url)
+    .then((l: ILicenseInfo) => {this.License = l; })
+    .catch((exception) => console.log(exception));
+    /**
+   * Получение текщих подключенных лицензий
+   */
+    this.users.getCurrentLicenceStatus(this.url).then((result: IDistributorUser[]) => {
+
+      let users: IDistributorUser[] = [];
+      moment.locale('rus');
+      result.forEach(element => {
+        let user = new DistributorUser();
+        user.LoginName = element.LoginName;
+        user.LogonTime = moment(element.LogonTime).fromNow();
+        user.PersonId = element.PersonId;
+        user.UserKey = element.UserKey;
+        users.push(user);
+      });
+
+      this.currentUserCount = users.length;
+      this.usedLicense = users.length;
+      this.allLicense = this.License.LicCount;
+
+      /**
+       * Конфигурация круговой диаграммы по состоянию лицензирования
+       */
+      this.optionsPieGraph = {
+        colors: ['#FF4081', '#3F51B5'],
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: 'pie'
+        },
+        title: {
+          text: ''
+
+        },
+        tooltip: {
+          pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: true,
+              format: '<b>{series.name} {point.name}</b>: {point.percentage:.1f} %',
+              style: {
+                color: 'black'
+              }
+            }
+          }
+        },
+        series: [{
+          name: '',
+          data: [{
+            name: 'использовано',
+            y: this.usedLicense
+          }, {
+            name: 'осталось',
+            y: this.allLicense,
+            sliced: true,
+            selected: true
+          }]
+        }]
+      };
+    });
+
+  }
 
   ngOnInit() {
     this.begin.setHours(0, 0, 0, 0);
@@ -368,11 +176,7 @@ export class HistoryStatusComponentComponent implements OnInit {
     let url = 'http://91.222.246.133:8085/distributor.cerber/DistributorCerber.svc';
     this.url = url;
     this.getPieChartData();
-    // this.getCurrentLicence();
-    // this.getLicences();
-    // this.GeUsers(url, bd, ed);
-    // this.GetCurrentConnectedUsers();
-    // this.GetLicencesInfo(url, bd, ed);
+    this.getLineCahartData(url, bd, ed);
   }
 
   /**
