@@ -87,7 +87,7 @@ export class CurrentStatusComponentComponent implements OnInit {
     /**
      * Получение текщих подключенных пользователей
      */
-    this.users.getCurrentUsers(this.url).then((result: IDistributorUser[]) => {
+    this.users.getCurrentLicenceStatus(this.url).then((result: IDistributorUser[]) => {
       let users: IDistributorUser[] = [];
       moment.locale('rus');
       result.forEach(element => {

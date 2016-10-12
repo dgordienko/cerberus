@@ -1,11 +1,13 @@
 <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--12-col">
-
     </div>
 </div>
 <div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--12-col">
-        <chart [options]="options"></chart>
+    <div class="mdl-cell mdl-cell--7-col">
+        <chart [options]="optionsLineGraph"></chart>
+    </div>
+    <div class="mdl-cell mdl-cell--5-col">
+        <chart [options]="pieOptions"></chart>
     </div>
 </div>
 
@@ -15,7 +17,7 @@
             <div class="mdl-cell mdl-cell--6-col">
                 <paper-input label='Поиск' (keyup)="filterPeople($event)"></paper-input>
             </div>
-            <div class="mdl-cell mdl-cell--6-col">
+            <div class="mdl-cell mdl-cell--6-col">.
             </div>
         </div>
         <vaadin-grid [items]="displayedUsers" (sort-order-changed)="sortUsers($event)">

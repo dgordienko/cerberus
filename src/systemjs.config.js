@@ -20,7 +20,8 @@
             'angular2-moment': 'npm:angular2-moment',
             'moment': 'npm:moment/min',
             '@vaadin/angular2-polymer': 'npm:@vaadin/angular2-polymer',
-            'linq-es2015': 'npm:linq-es2015'
+            'linq-es2015': 'npm:linq-es2015',
+            
         },
         packages: {
             app: {

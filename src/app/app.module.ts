@@ -12,7 +12,7 @@ import 'rxjs/add/operator/toPromise';
 import { PolymerElement } from '@vaadin/angular2-polymer';
 
 import { AppComponent } from './app.component';
-import { CurrentStatusComponentComponent } from './current-status-component/current-status-component.component';
+// import { CurrentStatusComponentComponent } from './current-status-component/current-status-component.component';
 import { HistoryStatusComponentComponent } from './history-status-component/history-status-component.component';
 import { ChartModule } from 'angular2-highcharts';
 
@@ -25,7 +25,7 @@ import { ChartModule } from 'angular2-highcharts';
     PolymerElement('paper-input'),
     PolymerElement('paper-badge'),
     PolymerElement('paper-button'),
-    CurrentStatusComponentComponent,
+    // CurrentStatusComponentComponent,
     HistoryStatusComponentComponent
   ],
   imports: [

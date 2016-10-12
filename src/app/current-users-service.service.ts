@@ -6,12 +6,12 @@ export class CurrentUsersServiceService {
   private url: string;
   constructor(private http: Http) { }
 
-  public getCurrentUsersCollect(url: string) {
+  public getCurrentLicenceStatusCollect(url: string) {
     this.url = url + '/api/cerber/users';
     return this.http.get(this.url).map((response: Response) => response.json());
   }
 
-  public getCurrentUsers(url: string) {
+  public getCurrentLicenceStatus(url: string) {
     this.url = url + '/api/cerber/users';
     return Promise.resolve((this.http.get(this.url).map((response: Response) => response.json())).toPromise());
   }
