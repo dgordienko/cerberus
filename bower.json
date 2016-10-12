@@ -33,6 +33,7 @@
     "moment": "^2.15.1",
     "paper-badge": "PolymerElements/paper-badge#^1.1.4",
     "vaadin-icons": "^1.0.2",
-    "loaders.css": "^0.1.2"
+    "loaders.css": "^0.1.2",
+    "linqjs-amd": "^0.1.0"
   }
 }

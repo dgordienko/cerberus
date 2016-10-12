@@ -13,7 +13,6 @@ import { IDistributorLicenceInfo } from '../idistributor-licence-info';
 })
 export class HistoryStatusComponentComponent implements OnInit {
 
-
   /**
    *Конфигурация диаграммы активных лицензий
    *
