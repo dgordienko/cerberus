@@ -7,9 +7,7 @@ import { IDistributorUser, DistributorUser } from '../idistributor-user';
 import { IDistributorLicenceInfo } from '../idistributor-licence-info';
 import { ILicenseInfo } from '../ilicense-info';
 import { CurrentUsersServiceService } from '../current-users-service.service';
-
-import { asEnumerable } from 'linq-es2015';
-
+import '../linq';
 
 @Component({
   selector: 'app-history-status-component',
@@ -46,6 +44,7 @@ export class HistoryStatusComponentComponent implements OnInit {
    * Лицензий использовано
    */
   private usedLicense: number;
+  private usersLicense: number;
   /**
    * Текущие использованные лицензии for users
    */
@@ -83,32 +82,26 @@ export class HistoryStatusComponentComponent implements OnInit {
     private current: CurrentLicenseServiceService,
     private users: CurrentUsersServiceService) { }
   /**
-   * Получение данных для построения линейного графика подключений пользователей за выбранный интервал дат
+   * Получение данных для построения линейного графика подключений пользователей
    *
    * @private
    *
    * @memberOf HistoryStatusComponentComponent
    */
-  private getLineCahartData(url, bd, ed) {
-
-    // this.current.getCurrentLicense(url).then((result: ILicenseInfo) => {
-    //   this.allLicense = this.EndPointLicense.LicCount = result.LicCount;
-    //   this.EndPointLicense = result;
-    // });
-
+  private getDashBoardData(url, bd, ed) {
+    // Текущее состояние лицензий
     this.history.getUseLicensedHistoty(url, bd, ed).then((result: IDistributorUser[]) => {
-      console.log('getUseLicensedHistoty');
-      console.log(result);
-      this.usedLicense = result.length;
+      let activeLicense = result.AsLinq().Where((x: IDistributorUser) => x.LogoffTime = null).ToArray();
+      let activeUsers = result.AsLinq().DistinctBy((x: IDistributorUser) => x.PersonId).Count();
+      this.usedLicense = activeLicense.length;
+      this.usersLicense = activeUsers;
     });
-
-      this.current.getCurrentLicense(url).then((result: ILicenseInfo) => {
-        console.log('getCurrentLicense');
-        console.log(result);
-        this.allLicense = this.EndPointLicense.LicCount = result.LicCount;
-        this.EndPointLicense = result;
+    // Текущее состояние лицензий
+    this.current.getCurrentLicense(url).then((result: ILicenseInfo) => {
+      this.allLicense = this.EndPointLicense.LicCount = result.LicCount;
+      this.EndPointLicense = result;
     });
-
+    // Текущие подключенные пользователи
     this.history.getUsersLicenseInfo(url, bd, ed).then((result: IDistributorLicenceInfo[]) => {
       let data: [number, number][] = [];
       let rslt: [moment.Moment, number][] = [];
@@ -152,8 +145,8 @@ export class HistoryStatusComponentComponent implements OnInit {
     let ed = this.toDate(this.end);
     let url = 'http://91.222.246.133:8085/distributor.cerber/DistributorCerber.svc';
     this.url = url;
-    // this.getPieChartData();
-    this.getLineCahartData(url, bd, ed);
+
+    this.getDashBoardData(url, bd, ed);
   }
 
   /**
