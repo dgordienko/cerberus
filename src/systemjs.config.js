@@ -5,7 +5,6 @@
         },
         map: {
             app: 'app',
-            // angular bundles
             '@angular/core': 'npm:@angular/core/bundles/core.umd.js',
             '@angular/common': 'npm:@angular/common/bundles/common.umd.js',
             '@angular/compiler': 'npm:@angular/compiler/bundles/compiler.umd.js',
@@ -14,14 +13,15 @@
             '@angular/http': 'npm:@angular/http/bundles/http.umd.js',
             '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
             '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
-            // other libraries
             'rxjs': 'npm:rxjs',
             'angular2-in-memory-web-api': 'npm:angular2-in-memory-web-api',
             'angular2-moment': 'npm:angular2-moment',
             'moment': 'npm:moment/min',
             '@vaadin/angular2-polymer': 'npm:@vaadin/angular2-polymer',
             'linq-es2015': 'npm:linq-es2015',
-            
+            'angular2-highcharts': 'https://cdn.rawgit.com/gevgeny/angular2-highcharts/v0.3.0/dist',
+            'highcharts/highstock.src': 'https://cdn.rawgit.com/highcharts/highcharts-dist/v4.2.1/highstock.js'
+
         },
         packages: {
             app: {
@@ -43,10 +43,12 @@
                 main: './index.js',
                 defaultExtension: 'js'
             },
-            'linq-es2015': {
-                main: 'dist/linq.js',
+            'angular2-highcharts': {
+                main: './index.js',
                 defaultExtension: 'js'
-            }
+            },
+            'linq-es2015': { main: 'dist/linq.js', defaultExtension: 'js' }
+
         }
     });
 })(this);

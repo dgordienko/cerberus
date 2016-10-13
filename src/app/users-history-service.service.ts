@@ -13,25 +13,23 @@ export class UsersHistoryServiceService {
   /**
    * Получение данных о истории подключенний пользователей
    */
-  getUsers(url: string, begin: string, end: string) {
+  getUseLicensedHistoty(url: string, begin: string, end: string) {
     this.urlUsers = url + this.urlUsers + `${begin}&end=${end}`;
-    console.log(`Ссылка на сервис с историей поключений ${this.urlUsers}`);
     return Promise.resolve((this.http.get(this.urlUsers).map((response: Response) => response.json())).toPromise());
   };
 
- /**
-  * Получение данных о истории использования лицензий
-  * 
-  * @param {any} url
-  * @param {any} begin
-  * @param {string} end
-  * @returns
-  * 
-  * @memberOf UsersHistoryServiceService
-  */
+  /**
+   * Получение данных о истории использования лицензий
+   *
+   * @param {any} url
+   * @param {any} begin
+   * @param {string} end
+   * @returns
+   *
+   * @memberOf UsersHistoryServiceService
+   */
   getUsersLicenseInfo(url, begin, end: string) {
     this.urlLicese = url + this.urlLicese + `${begin}&end=${end}`;
-    console.log(`Ссылка на сервис с историей использования лицензий ${this.urlLicese}`);
     return Promise.resolve((this.http.get(this.urlLicese).map((response: Response) => response.json())).toPromise());
   }
 }

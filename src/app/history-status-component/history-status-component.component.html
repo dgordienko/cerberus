@@ -2,15 +2,33 @@
     <div class="mdl-cell mdl-cell--12-col">
     </div>
 </div>
+<h5>Использование лицензий</h5>
 <div class="mdl-grid">
-    <div class="mdl-cell mdl-cell--7-col">
-        <chart [options]="optionsLineGraph"></chart>
-    </div>
-    <div class="mdl-cell mdl-cell--5-col">
+    <div class="mdl-cell mdl-cell--12-col">
         <chart [options]="optionsPieGraph"></chart>
+        <div class="mdl-cell mdl-cell--4-col ">
+            <span class="mdl-chip">
+            <span class="mdl-chip__text">Активно лицензий {{usedLicense}}</span>
+            </span>
+            <span class="mdl-chip">
+            <span class="mdl-chip__text">Выдано лицензий {{allLicense}}</span>
+            </span>
+            <span class="mdl-chip">
+            <span class="mdl-chip__text">Активно пользователей {{currentUserCount}}</span>
+            </span>
+        </div>
     </div>
 </div>
-
+<h5>Ретроспектива </h5>
+<div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col">
+        <chart [options]="optionsLineGraph">
+            <series>
+                <point (select)="onPointSelect($event)"></point>
+            </series>
+        </chart>
+    </div>
+</div>
 <div class="mdl-grid">
     <div class="mdl-cell mdl-cell--12-col">
         <div class="mdl-grid">
@@ -39,6 +57,5 @@
         <span class="mdl-chip">
             <span class="mdl-chip__text">Показано {{currentUserFilteredCount}} из {{currentUserCount}} записей</span>
         </span>
-
     </div>
 </div>
