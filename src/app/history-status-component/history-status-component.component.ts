@@ -97,52 +97,16 @@ export class HistoryStatusComponentComponent implements OnInit {
     // });
 
     this.history.getUseLicensedHistoty(url, bd, ed).then((result: IDistributorUser[]) => {
+      console.log('getUseLicensedHistoty');
+      console.log(result);
       this.usedLicense = result.length;
-      this.current.getCurrentLicense(url).then((r: ILicenseInfo) => {
-      this.allLicense = this.EndPointLicense.LicCount = r.LicCount;
-      this.EndPointLicense = result;
-            this.optionsPieGraph = {
-        colors: ['#FF4081', '#3F51B5'],
-        chart: {
-          plotBackgroundColor: null,
-          plotBorderWidth: null,
-          plotShadow: false,
-          type: 'pie'
-        },
-        title: {
-          text: ''
-
-        },
-        tooltip: {
-          pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
-          pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-              enabled: true,
-              format: '<b>{series.name} {point.name}</b>: {point.percentage:.1f} %',
-              style: {
-                color: 'black'
-              }
-            }
-          }
-        },
-        series: [{
-          name: 'Лицензии ',
-          data: [{
-            name: 'использовано',
-            y: this.usedLicense
-          }, {
-            name: 'осталось',
-            y: this.allLicense,
-            sliced: true,
-            selected: true
-          }]
-        }]
-      };
     });
+
+      this.current.getCurrentLicense(url).then((result: ILicenseInfo) => {
+        console.log('getCurrentLicense');
+        console.log(result);
+        this.allLicense = this.EndPointLicense.LicCount = result.LicCount;
+        this.EndPointLicense = result;
     });
 
     this.history.getUsersLicenseInfo(url, bd, ed).then((result: IDistributorLicenceInfo[]) => {
