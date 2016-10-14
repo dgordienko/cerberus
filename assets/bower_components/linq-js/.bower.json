@@ -32,5 +32,6 @@
   },
   "_source": "https://github.com/Soulskater/linqJS.git",
   "_target": "*",
-  "_originalSource": "linq-js"
+  "_originalSource": "linq-js",
+  "_direct": true
 }
