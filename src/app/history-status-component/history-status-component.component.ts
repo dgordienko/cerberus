@@ -3,7 +3,7 @@ import * as moment from 'moment';
 import 'moment/locale/ru.js';
 import { UsersHistoryServiceService } from '../users-history-service.service';
 import { CurrentLicenseServiceService } from '../current-license-service.service';
-import { IDistributorUser, DistributorUser } from '../idistributor-user';
+import { IDistributorUser } from '../idistributor-user';
 import { IDistributorLicenceInfo } from '../idistributor-licence-info';
 import { ILicenseInfo } from '../ilicense-info';
 import { CurrentUsersServiceService } from '../current-users-service.service';
@@ -48,7 +48,7 @@ export class HistoryStatusComponentComponent implements OnInit {
   /**
    * Текущие использованные лицензии for users
    */
-  public Licences: IDistributorUser[];
+   Licences: IDistributorUser[];
   /**
    *
    */
@@ -89,36 +89,45 @@ export class HistoryStatusComponentComponent implements OnInit {
    * @memberOf HistoryStatusComponentComponent
    */
   private getDashBoardData(url, bd, ed) {
-    // Текущее состояние лицензий
-    this.history.getUseLicensedHistoty(url, bd, ed).then((result: IDistributorUser[]) => {
-      let activeLicense = result.AsLinq().Where((x: IDistributorUser) => x.LogoffTime = null).ToArray();
-      let activeUsers = result.AsLinq().DistinctBy((x: IDistributorUser) => x.PersonId).Count();
+    let usedLicensed = this.history.getUseLicensedHistoty(url, bd, ed);
+    let currentStatus = this.current.getCurrentLicense(url);
+    let currentUsers = this.history.getUsersLicenseInfo(url, bd, ed);
+    let used: IDistributorUser[];
+    let current: ILicenseInfo;
+    let users: IDistributorLicenceInfo[];
+    Promise.all([usedLicensed, currentStatus, currentUsers]).then((result) => {
+      // magic! неявный вызов map
+      moment.locale('rus');
+      [used, current, users] = result;
+      // Текущее состояние лицензий  
+      let activeLicense = result[0].AsLinq().Where((x: IDistributorUser) => x.LogoffTime = null).ToArray();
+      let q11 = result[0].AsLinq().Select(x => x.PersonId).Distinct().ToArray();
+      let activeUsers = q11.length;
+      this.usersLicense = activeUsers;
+      this.EndPointLicense = result[1];
       this.usedLicense = activeLicense.length;
       this.usersLicense = activeUsers;
-    });
-    // Текущее состояние лицензий
-    this.current.getCurrentLicense(url).then((result: ILicenseInfo) => {
-      this.allLicense = this.EndPointLicense.LicCount = result.LicCount;
-      this.EndPointLicense = result;
-    });
-    // Текущие подключенные пользователи
-    this.history.getUsersLicenseInfo(url, bd, ed).then((result: IDistributorLicenceInfo[]) => {
+      this.allLicense = result[1].LicCount;
       let data: [number, number][] = [];
-      let rslt: [moment.Moment, number][] = [];
-      for (let index = 0; index < result.length; index++) {
-        let element = result[index];
-        let dt = moment(element.Time).utc();
-        let cnt = element.Count;
-        rslt.push([dt, cnt]);
-      }
-      result.forEach(element => {
+
+      result[2].forEach(element => {
         let dateValue = Number.parseInt(moment(element.Time).add('h', 3).format('x'));
         let countValue = element.Count;
         data.push([dateValue, countValue]);
       });
-
-
-      moment.locale('rus');
+      this.usedLicense = result[0].AsLinq().Count();
+      let q: IDistributorUser[] = result[0].AsLinq().ToArray();
+      q.forEach((element: IDistributorUser) => {
+        if ( element.LogoffTime != null) {
+          element.LogoffTime = moment(element.LogoffTime).format('dddd Do HH:mm:ss');
+        } else {
+          element.LogoffTime = `Зарегистрирован ${moment(element.LogonTime).fromNow()}`;
+        };
+        element.LogonTime = moment(element.LogonTime).format('dddd Do HH:mm:ss');
+      });
+      // активные подключенные пользоваоели системы      
+      this.Licences = q;
+      // Конфигурация графиков
       this.optionsLineGraph = {
         chart: {
           zoomType: 'xy'
@@ -134,18 +143,55 @@ export class HistoryStatusComponentComponent implements OnInit {
           type: 'datetime',
         }
       };
-
-    });
+      this.optionsPieGraph = {
+        colors: ['#FF4081', '#3F51B5'],
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: 'pie'
+        },
+        title: {
+          text: ''
+        },
+        tooltip: {
+          pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: true,
+              format: '<b>{series.name} {point.name}</b>: {point.percentage:.1f} %',
+              style: {
+                color: 'black'
+              }
+            }
+          }
+        },
+        series: [{
+          name: 'Лицензий',
+          data: [{
+            name: 'использовано',
+            y: this.usedLicense
+          }, {
+            name: 'осталось',
+            y: this.allLicense,
+            sliced: true,
+            selected: true
+          }]
+        }]
+      };
+    }).catch(exception => console.log(exception));
   }
-
-
   ngOnInit() {
     this.begin.setHours(0, 0, 0, 0);
     let bd = this.toDate(this.begin);
     let ed = this.toDate(this.end);
     let url = 'http://91.222.246.133:8085/distributor.cerber/DistributorCerber.svc';
+    // let url = 'http://193.110.115.195:8090/distributor.cerber/DistributorCerber.svc';
     this.url = url;
-
     this.getDashBoardData(url, bd, ed);
   }
 

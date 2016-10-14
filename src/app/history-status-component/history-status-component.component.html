@@ -14,7 +14,7 @@
             <span class="mdl-chip__text">Выдано лицензий {{allLicense}}</span>
             </span>
             <span class="mdl-chip">
-            <span class="mdl-chip__text">Активно пользователей {{currentUserCount}}</span>
+            <span class="mdl-chip__text">Активно пользователей {{usersLicense}}</span>
             </span>
         </div>
     </div>
@@ -38,9 +38,20 @@
             <div class="mdl-cell mdl-cell--6-col">.
             </div>
         </div>
-        <vaadin-grid [items]="displayedUsers" (sort-order-changed)="sortUsers($event)">
+        
+        <vaadin-grid [items]="people">
             <table>
                 <colgroup>
+                    <col name="firstName">
+                    <col name="lastName">
+                    <col name="email">
+                </colgroup>
+            </table>
+        </vaadin-grid>
+
+        <!--<vaadin-grid [items]="Licences" (sort-order-changed)="sortUsers($event)">
+            <table>
+                <colgroup>                
                     <col sortable name="LoginName">
                     <col sortable name="LogonTime">
                     <col sortable name="LogoffTime">
@@ -53,9 +64,9 @@
                     </tr>
                 </thead>
             </table>
-        </vaadin-grid>
+        </vaadin-grid>-->
         <span class="mdl-chip">
-            <span class="mdl-chip__text">Показано {{currentUserFilteredCount}} из {{currentUserCount}} записей</span>
+            <!--<span class="mdl-chip__text">Показано {{currentUserFilteredCount}} из {{currentUserCount}} записей</span>-->
         </span>
     </div>
 </div>

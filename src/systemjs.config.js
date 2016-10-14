@@ -21,7 +21,6 @@
             'angular2-highcharts': 'https://cdn.rawgit.com/gevgeny/angular2-highcharts/v0.3.0/dist',
             'highcharts/highstock.src': 'https://cdn.rawgit.com/highcharts/highcharts-dist/v4.2.1/highstock.js',
             'typescript-dotnet-es6': 'npm:typescript-dotnet-umd/extends.js'
-
         },
         packages: {
             app: {

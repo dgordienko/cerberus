@@ -2,7 +2,7 @@ module TSLinq {
     export class Linq<T>
     {
         constructor(private a: T[] = []) {
-            Object.defineProperty(this, "a", { value: a, writable: false });
+            Object.defineProperty(this, 'a', { value: a, writable: false });
         }
 
         Aggregate<TResult>(func: (previous: T, next: T) => TResult, initialValue?: T): T {
@@ -10,7 +10,7 @@ module TSLinq {
             var current;
 
             if ((a = this.a).length === 0)
-                throw "Aggregate of empty array";
+                throw 'Aggregate of empty array';
 
             current = a[0];
 
@@ -102,38 +102,40 @@ module TSLinq {
         }
 
         ElementAt(index: number): T {
-            if (index < 0 || index >= this.a.length)
-                throw "Index was out of range. Must be non-negative and less than the size of the collection.";
+            if (index < 0 || index >= this.a.length) {
+                throw 'Index was out of range. Must be non-negative and less than the size of the collection.';
+            }
 
             return this.a[index];
         }
 
         ElementAtOrDefault(index: number, defaultValue: T): T {
-            if (index >= this.a.length || index < 0)
-                return defaultValue;
+            if (index >= this.a.length || index < 0) {
+                return defaultValue;}
 
             return this.a[index];
         }
 
         Except(except: T[], comparer?: IEqualityComparer<T>): Linq<T> {
-            var a = this.a;
+            let a = this.a;
 
-            var result: T[] = [];
-            var hashTable = {};
+            let result: T[] = [];
+            let hashTable = {};
 
-            var e, eHash: number;
-            var getHash = comparer ? comparer.GetHashCode : e => Object.GetHashCode(e);
+            let e, eHash: number;
+            let getHash = comparer ? comparer.GetHashCode : e => Object.GetHashCode(e);
 
-            for (var i = 0, n = except.length; i < n; ++i) {
+            for (let i = 0, n = except.length; i < n; ++i) {
                 hashTable[getHash(except[i])] = 1;
             }
 
-            for (var i = 0, n = a.length; i < n; ++i) {
+            for (let i = 0, n = a.length; i < n; ++i) {
                 e = a[i];
                 eHash = getHash(e);
 
-                if (!hashTable[eHash])
+                if (!hashTable[eHash]) {
                     result.push(e);
+                }
             }
 
             return new Linq<T>(result);
@@ -141,14 +143,14 @@ module TSLinq {
 
         First(selector?: (e: T) => boolean): T {
             if (this.a.length === 0)
-                throw "Enumeration does not contain elements";
+                throw 'Enumeration does not contain elements';
 
             if (!selector)
                 return this.a[0];
 
             var result = this.Where(selector);
             if (result.Count() === 0)
-                throw "Enumeration does not contain elements";
+                throw 'Enumeration does not contain elements';
 
             return result.ElementAt(0);
         }
@@ -185,10 +187,10 @@ module TSLinq {
                 key = keySelector(a[i]);
                 hashKey = comparer.GetHashCode(key);
 
-                if (typeof hashs[hashKey] !== "undefined")
+                if (typeof hashs[hashKey] !== 'undefined')
                     reHashKey = comparer.Equals(key, <TKey>hashs[hashKey].Key) ? hashKey : hashKey + i;
 
-                if (typeof reHashKey !== "undefined" && reHashKey !== hashKey)
+                if (typeof reHashKey !== 'undefined' && reHashKey !== hashKey)
                     hashKey = reHashKey;
 
                 hashs[hashKey] = hashs[hashKey] || { Key: key, Elements: [] };
@@ -265,14 +267,14 @@ module TSLinq {
 
         Last(predicate?: (e: T) => boolean): T {
             if (this.a.length === 0)
-                throw "Enumeration does not contain elements";
+                throw 'Enumeration does not contain elements';
 
             if (!predicate)
                 return this.a[this.a.length - 1];
 
             var result = this.Where(predicate);
             if (result.Count() === 0)
-                throw "Enumeration does not contain elements";
+                throw 'Enumeration does not contain elements';
 
             return result.Last();
         }
@@ -295,7 +297,7 @@ module TSLinq {
             var a = this.a;
 
             if (a.length === 0)
-                throw "Sequence contains no elements.";
+                throw 'Sequence contains no elements.';
 
             selector = selector || (o => <any>o);
 
@@ -314,7 +316,7 @@ module TSLinq {
             var a = this.a;
 
             if (a.length === 0)
-                throw "Sequence contains no elements.";
+                throw 'Sequence contains no elements.';
 
             selector = selector || (o => <any>o);
 
@@ -388,8 +390,8 @@ module TSLinq {
         SequenceEqual(second: T[], comparer?: (a: T, b: T) => boolean): boolean {
             var a = this.a;
 
-            if (typeof a === "undefined" || typeof second === "undefined") {
-                throw "Do not pass null values to arrays.";
+            if (typeof a === 'undefined' || typeof second === 'undefined') {
+                throw 'Do not pass null values to arrays.';
             }
 
             if (a === second) {
@@ -421,7 +423,7 @@ module TSLinq {
 
             if (!predicate) {
                 if (a.length != 1)
-                    throw "Source has none or more than one element";
+                    throw 'Source has none or more than one element';
 
                 return a[0];
             }
@@ -431,7 +433,7 @@ module TSLinq {
             for (var i = 0, n = a.length; i < n; ++i) {
                 if (predicate(a[i])) {
                     if (found != null)
-                        throw "Source has more than one element";
+                        throw 'Source has more than one element';
 
                     found = a[i];
                 }
@@ -631,8 +633,8 @@ Number.GetHashCode = function (e) { return e.valueOf(); };
 
 interface Object { IsPlain(e): boolean; }
 Object.IsPlain = function (e) {
-    if ((typeof (e) !== "object" || e.nodeType || (e instanceof Window))
-        || (e.constructor && !({}).hasOwnProperty.call(e.constructor.prototype, "isPrototypeOf"))
+    if ((typeof (e) !== 'object' || e.nodeType || (e instanceof Window))
+        || (e.constructor && !({}).hasOwnProperty.call(e.constructor.prototype, 'isPrototypeOf'))
     ) {
         return false;
     }
@@ -642,19 +644,19 @@ Object.IsPlain = function (e) {
 
 interface JSON { StringifyNonCircular(obj: any): string; }
 JSON.StringifyNonCircular = function (obj) {
-    var s = s || "";
+    var s = s || '';
 
     for (var i in obj) {
         var o = obj[i];
 
         if (o && (o instanceof Array || o.IsPlain())) {
-            s += i + ":" + JSON.stringify(o);
+            s += i + ':' + JSON.stringify(o);
         }
-        else if (o && typeof o === "object") {
-            s += i + ":" + "$ref#" + o;
+        else if (o && typeof o === 'object') {
+            s += i + ':' + '$ref#' + o;
         }
         else {
-            s += i + ":" + o;
+            s += i + ':' + o;
         }
     }
 
