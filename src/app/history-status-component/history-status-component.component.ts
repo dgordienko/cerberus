@@ -96,9 +96,11 @@ export class HistoryStatusComponentComponent implements OnInit {
     let current: ILicenseInfo;
     let users: IDistributorLicenceInfo[];
     Promise.all([usedLicensed, currentStatus, currentUsers]).then((result) => {
+
       // magic! неявный вызов map
       moment.locale('rus');
       [used, current, users] = result;
+
       // Текущее состояние лицензий  
       let activeLicense = result[0].AsLinq().Where((x: IDistributorUser) => x.LogoffTime = null).ToArray();
       let q11 = result[0].AsLinq().Select(x => x.PersonId).Distinct().ToArray();
@@ -110,11 +112,23 @@ export class HistoryStatusComponentComponent implements OnInit {
       this.allLicense = result[1].LicCount;
       let data: [number, number][] = [];
 
-      result[2].forEach(element => {
-        let dateValue = Number.parseInt(moment(element.Time).add('h', 3).format('x'));
-        let countValue = element.Count;
-        data.push([dateValue, countValue]);
+      let rslt: [Date, number, Date, number][] = [];
+
+      result[2].forEach(x => {
+        let dateValue = moment(x.Time).toDate();
+        let count = x.Count;
+        let d = Number.parseInt(moment(dateValue).format('x'));
+        rslt.push([dateValue, count, moment(d).toDate(), d]);
       });
+
+      console.table(rslt);
+
+      result[2].forEach(element => {
+        let count = element.Count;
+        let d = Number.parseInt(moment(element.Time).add('h', 3).format('x'));
+        data.push([d, count]);
+      });
+
       this.usedLicense = result[0].AsLinq().Count();
       let q: IDistributorUser[] = result[0].AsLinq().ToArray();
       q.forEach((element: IDistributorUser) => {
