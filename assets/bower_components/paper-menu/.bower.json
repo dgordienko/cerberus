@@ -44,5 +44,6 @@
   },
   "_source": "git://github.com/PolymerElements/paper-menu.git",
   "_target": "^1.2.2",
-  "_originalSource": "PolymerElements/paper-menu"
+  "_originalSource": "PolymerElements/paper-menu",
+  "_direct": true
 }
