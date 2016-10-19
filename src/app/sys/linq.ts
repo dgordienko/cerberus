@@ -6,15 +6,15 @@ module TSLinq {
         }
 
         Aggregate<TResult>(func: (previous: T, next: T) => TResult, initialValue?: T): T {
-            var a;
-            var current;
+            let a;
+            let current;
 
             if ((a = this.a).length === 0)
                 throw 'Aggregate of empty array';
 
             current = a[0];
 
-            for (var i = 1, n = a.length; i < n; ++i) {
+            for (let i = 1, n = a.length; i < n; ++i) {
                 current = func(current, a[i]);
             }
 
@@ -22,8 +22,8 @@ module TSLinq {
         }
 
         All(predicate: (value: T) => boolean): boolean {
-            var a = this.a;
-            for (var i = 0, n = a.length; i < n; ++i) {
+            let a = this.a;
+            for (let i = 0, n = a.length; i < n; ++i) {
                 if (!predicate(a[i])) {
                     return false;
                 }
@@ -33,8 +33,8 @@ module TSLinq {
         }
 
         Any(predicate: (value: T) => boolean): boolean {
-            var a = this.a;
-            for (var i = 0, n = a.length; i < n; ++i) {
+            let a = this.a;
+            for (let i = 0, n = a.length; i < n; ++i) {
                 if (predicate(a[i])) {
                     return true;
                 }
@@ -44,14 +44,14 @@ module TSLinq {
         }
 
         Average(selector?: (value: T) => number): number {
-            var a = this.a;
+            let a = this.a;
 
             selector = selector || (o => <any>o);
 
-            var total = 0;
+            let total = 0;
 
-            var len = a.length;
-            for (var i = 0; i < len; ++i) {
+            let len = a.length;
+            for (let i = 0; i < len; ++i) {
                 total += selector(a[i]);
             }
 
@@ -81,16 +81,16 @@ module TSLinq {
         }
 
         DistinctBy<U>(selector: (e: T) => U, comparer?: IEqualityComparer<T>): Linq<T> {
-            var a = this.a;
-            var e;
+            let a = this.a;
+            let e;
 
-            var keys = []
+            let keys = []
                 , unique: T[] = [];
 
-            for (var i = 0, n = a.length; i < n; ++i) {
+            for (let i = 0, n = a.length; i < n; ++i) {
                 e = a[i];
 
-                var objKey = selector(e);
+                let objKey = selector(e);
 
                 if (!keys.AsLinq().Contains(objKey, comparer)) {
                     keys.push(objKey);
@@ -111,7 +111,7 @@ module TSLinq {
 
         ElementAtOrDefault(index: number, defaultValue: T): T {
             if (index >= this.a.length || index < 0) {
-                return defaultValue;}
+                return defaultValue; }
 
             return this.a[index];
         }
@@ -148,7 +148,7 @@ module TSLinq {
             if (!selector)
                 return this.a[0];
 
-            var result = this.Where(selector);
+            let result = this.Where(selector);
             if (result.Count() === 0)
                 throw 'Enumeration does not contain elements';
 
@@ -163,9 +163,9 @@ module TSLinq {
         }
 
         ForEach(callback: (e: T, index: number) => any): void {
-            var a = this.a;
+            let a = this.a;
 
-            for (var i = 0, n = a.length; i < n; ++i) {
+            for (let i = 0, n = a.length; i < n; ++i) {
                 if (callback(a[i], i) === false)
                     break;
             }
@@ -175,13 +175,13 @@ module TSLinq {
             , elementSelector?: (e: T) => TElement
             , comparer?: IEqualityComparer<TKey>): Linq<any> {
             elementSelector = elementSelector || (o => <any>o);
-            comparer = comparer || { Equals: (a, b) => a == b, GetHashCode: (e) => Object.GetHashCode(e) };
+            comparer = comparer || { Equals: (a, b) => a === b, GetHashCode: (e) => Object.GetHashCode(e) };
 
-            var a = this.a;
+            let a = this.a;
 
-            var key: TKey, hashKey: number, reHashKey: number;
-            var hashs = {};
-            for (var i = 0, n = a.length; i < n; ++i) {
+            let key: TKey, hashKey: number, reHashKey: number;
+            let hashs = {};
+            for (let i = 0, n = a.length; i < n; ++i) {
                 reHashKey = undefined;
 
                 key = keySelector(a[i]);
@@ -197,9 +197,9 @@ module TSLinq {
                 hashs[hashKey].Elements.push(elementSelector(a[i]));
             }
 
-            var keys = Object.keys(hashs);
-            var ret: IGrouping<TKey, T>[] = [];
-            for (var i = 0, n = keys.length; i < n; ++i) {
+            let keys = Object.keys(hashs);
+            let ret: IGrouping<TKey, T>[] = [];
+            for (let i = 0, n = keys.length; i < n; ++i) {
                 ret.push(hashs[keys[i]]);
             }
 
@@ -207,11 +207,11 @@ module TSLinq {
         }
 
         IndexOf(e: T, comparer?: IEqualityComparer<T>): number {
-            var a = this.a;
+            let a = this.a;
 
             if (comparer) {
-                for (var i = 0, n = a.length; i < n; ++i) {
-                    var ce = a[i];
+                for (let i = 0, n = a.length; i < n; ++i) {
+                    let ce = a[i];
 
                     if (comparer.Equals(ce, e)) {
                         return i;
@@ -219,7 +219,7 @@ module TSLinq {
                 }
             }
             else {
-                for (var i = 0, n = a.length; i < n; ++i) {
+                for (let i = 0, n = a.length; i < n; ++i) {
                     if (a[i] === e) {
                         return i;
                     }
@@ -230,9 +230,9 @@ module TSLinq {
         }
 
         Intersect(array: T[], comparer?: IEqualityComparer<T>): Linq<T> {
-            var result: T[] = [];
+            let result: T[] = [];
 
-            for (var i = 0, n = array.length; i < n; ++i) {
+            for (let i = 0, n = array.length; i < n; ++i) {
                 if (this.Contains(array[i], comparer)) {
                     result.push(array[i]);
                 }
@@ -246,17 +246,17 @@ module TSLinq {
             , innerKeySelector: (e: TInner) => TKey
             , resultSelector: (outer: T, inner: TInner) => TResult
             , comparer?: IEqualityComparer<TKey>): Linq<TResult> {
-            var result: TResult[] = [];
+            let result: TResult[] = [];
 
-            var outer = this.Select<TKey>(outerKeySelector);
-            var inner = array.AsLinq<TInner>().Select<TKey>(innerKeySelector);
+            let outer = this.Select<TKey>(outerKeySelector);
+            let inner = array.AsLinq<TInner>().Select<TKey>(innerKeySelector);
 
-            for (var i = 0, n = outer.Count(); i < n; ++i) {
-                var outerKey = outer.ElementAt(i);
+            for (let i = 0, n = outer.Count(); i < n; ++i) {
+                let outerKey = outer.ElementAt(i);
 
-                var index: number = -1;
+                let index: number = -1;
                 if ((index = inner.IndexOf(outerKey, comparer)) != -1) {
-                    var innerKey = inner.ElementAt(index);
+                    let innerKey = inner.ElementAt(index);
 
                     result.push(resultSelector(<any>outerKey, <any>innerKey));
                 }
@@ -272,7 +272,7 @@ module TSLinq {
             if (!predicate)
                 return this.a[this.a.length - 1];
 
-            var result = this.Where(predicate);
+            let result = this.Where(predicate);
             if (result.Count() === 0)
                 throw 'Enumeration does not contain elements';
 
@@ -286,7 +286,7 @@ module TSLinq {
             if (!predicate)
                 return this.a[this.a.length - 1];
 
-            var result = this.Where(predicate);
+            let result = this.Where(predicate);
             if (result.Count() === 0)
                 return defaultValue;
 
@@ -294,17 +294,17 @@ module TSLinq {
         }
 
         Max<TResult>(selector?: (e: T) => TResult): TResult {
-            var a = this.a;
+            let a = this.a;
 
             if (a.length === 0)
                 throw 'Sequence contains no elements.';
 
             selector = selector || (o => <any>o);
 
-            var max = selector(a[0]);
+            let max = selector(a[0]);
 
-            for (var i = 0, n = a.length; i < n; ++i) {
-                var next = selector(a[i]);
+            for (let i = 0, n = a.length; i < n; ++i) {
+                let next = selector(a[i]);
                 if (next > max)
                     max = next;
             }
@@ -313,17 +313,17 @@ module TSLinq {
         }
 
         Min<TResult>(selector?: (e: T) => TResult): TResult {
-            var a = this.a;
+            let a = this.a;
 
             if (a.length === 0)
                 throw 'Sequence contains no elements.';
 
             selector = selector || (o => <any>o);
 
-            var min = selector(a[0]);
+            let min = selector(a[0]);
 
-            for (var i = 0, n = a.length; i < n; ++i) {
-                var next = selector(a[i]);
+            for (let i = 0, n = a.length; i < n; ++i) {
+                let next = selector(a[i]);
                 if (next < min)
                     min = next;
             }
@@ -350,9 +350,9 @@ module TSLinq {
         }
 
         Reverse(): Linq<T> {
-            var right = this.a.length - 1;
-            for (var left = 0; left < right; ++left, --right) {
-                var temporary = this.a[left];
+            let right = this.a.length - 1;
+            for (let left = 0; left < right; ++left, --right) {
+                let temporary = this.a[left];
                 this.a[left] = this.a[right];
                 this.a[right] = temporary;
             }
@@ -361,11 +361,11 @@ module TSLinq {
         }
 
         Select<TResult>(selector: (e: T, i?: number) => TResult): Linq<TResult> {
-            var a = this.a;
+            let a = this.a;
 
-            var result: TResult[] = [];
+            let result: TResult[] = [];
 
-            for (var i = 0, n = a.length; i < n; ++i) {
+            for (let i = 0, n = a.length; i < n; ++i) {
                 result.push(selector(a[i], i));
             }
 
@@ -373,11 +373,11 @@ module TSLinq {
         }
 
         SelectMany<TResult>(selector: (e: T) => T[], resultSelector?: (e: T) => TResult): Linq<TResult> {
-            var a = this.a;
+            let a = this.a;
 
-            var result: T[] = [];
+            let result: T[] = [];
 
-            for (var i = 0, n = a.length; i < n; ++i) {
+            for (let i = 0, n = a.length; i < n; ++i) {
                 result = result.concat(selector(a[i]));
             }
 
@@ -388,7 +388,7 @@ module TSLinq {
         }
 
         SequenceEqual(second: T[], comparer?: (a: T, b: T) => boolean): boolean {
-            var a = this.a;
+            let a = this.a;
 
             if (typeof a === 'undefined' || typeof second === 'undefined') {
                 throw 'Do not pass null values to arrays.';
@@ -403,13 +403,13 @@ module TSLinq {
             }
 
             if (comparer) {
-                for (var i = 0, n = a.length; i < n; i++) {
+                for (let i = 0, n = a.length; i < n; i++) {
                     if (!comparer(a[i], second[i]))
                         return false;
                 }
             }
             else {
-                for (var i = 0, n = a.length; i < n; i++) {
+                for (let i = 0, n = a.length; i < n; i++) {
                     if (a[i] !== second[i])
                         return false;
                 }
@@ -419,7 +419,7 @@ module TSLinq {
         }
 
         Single(predicate?: (e: T) => boolean): T {
-            var a = this.a;
+            let a = this.a;
 
             if (!predicate) {
                 if (a.length != 1)
@@ -428,9 +428,9 @@ module TSLinq {
                 return a[0];
             }
 
-            var found: T = null;
+            let found: T = null;
 
-            for (var i = 0, n = a.length; i < n; ++i) {
+            for (let i = 0, n = a.length; i < n; ++i) {
                 if (predicate(a[i])) {
                     if (found != null)
                         throw 'Source has more than one element';
@@ -443,7 +443,7 @@ module TSLinq {
         }
 
         SingleOrDefault(predicate?: (e: T) => boolean, defaultValue?: T): T {
-            var a = this.a;
+            let a = this.a;
 
             if (!predicate) {
                 if (a.length != 1)
@@ -452,9 +452,9 @@ module TSLinq {
                 return a[0];
             }
 
-            var found: T = null;
+            let found: T = null;
 
-            for (var i = 0, n = a.length; i < n; ++i) {
+            for (let i = 0, n = a.length; i < n; ++i) {
                 if (predicate(a[i])) {
                     if (found != null)
                         return defaultValue;
@@ -471,10 +471,10 @@ module TSLinq {
         }
 
         SkipWhile(predicate: (e: T) => boolean): Linq<T> {
-            var a = this.a
+            let a = this.a
                 , i = 0;
 
-            for (var n = a.length; i < n; ++i) {
+            for (let n = a.length; i < n; ++i) {
                 if (predicate(a[i]) === false)
                     break;
             }
@@ -483,17 +483,17 @@ module TSLinq {
         }
 
         Sum(selector?: (value: T) => number): number {
-            var a = this.a;
+            let a = this.a;
 
-            var result = 0;
+            let result = 0;
 
             if (selector) {
-                for (var i = 0, n = a.length; i < n; ++i) {
+                for (let i = 0, n = a.length; i < n; ++i) {
                     result += selector(a[i]);
                 }
             }
             else {
-                for (var i = 0, n = a.length; i < n; ++i) {
+                for (let i = 0, n = a.length; i < n; ++i) {
                     result += <any>a[i];
                 }
             }
@@ -502,11 +502,11 @@ module TSLinq {
         }
 
         Take(count: number): Linq<T> {
-            var a = this.a;
-            var result: T[] = [];
+            let a = this.a;
+            let result: T[] = [];
 
             var len = count > (len = a.length) ? len : count;
-            for (var i = 0; i < len; ++i) {
+            for (let i = 0; i < len; ++i) {
                 result.push(a[i]);
             }
 
@@ -514,10 +514,10 @@ module TSLinq {
         }
 
         TakeWhile(predicate: (e: T) => boolean): Linq<T> {
-            var a = this.a;
-            var result: T[] = [];
+            let a = this.a;
+            let result: T[] = [];
 
-            for (var i = 0, n = a.length, e; i < n; ++i) {
+            for (let i = 0, n = a.length, e; i < n; ++i) {
                 e = a[i];
 
                 if (predicate(e)) {
@@ -532,14 +532,14 @@ module TSLinq {
         }
 
         Union(second: T[], comparer?: IEqualityComparer<T>): Linq<T> {
-            var a = this.a;
-            var result: T[] = [];
-            var hashTable = {};
+            let a = this.a;
+            let result: T[] = [];
+            let hashTable = {};
 
-            var e, eHash: number;
-            var getHash = comparer ? comparer.GetHashCode : e => Object.GetHashCode(e);
+            let e, eHash: number;
+            let getHash = comparer ? comparer.GetHashCode : e => Object.GetHashCode(e);
 
-            for (var i = 0, n = a.length; i < n; ++i) {
+            for (let i = 0, n = a.length; i < n; ++i) {
                 e = a[i];
                 eHash = getHash(e);
 
@@ -549,7 +549,7 @@ module TSLinq {
                 }
             }
 
-            for (var i = 0, n = second.length; i < n; ++i) {
+            for (let i = 0, n = second.length; i < n; ++i) {
                 e = second[i];
                 eHash = getHash(e);
 
@@ -563,12 +563,12 @@ module TSLinq {
         }
 
         Where(selector: (value: T) => boolean): Linq<T> {
-            var a = this.a;
+            let a = this.a;
 
-            var e;
-            var result: T[] = [];
+            let e;
+            let result: T[] = [];
 
-            for (var i = 0, n = a.length; i < n; ++i) {
+            for (let i = 0, n = a.length; i < n; ++i) {
                 e = a[i];
                 if (selector(e)) {
                     result.push(e);
@@ -579,12 +579,12 @@ module TSLinq {
         }
 
         Zip<TInner, TResult>(array: TInner[], resultSelector: (o: T, i: TInner) => TResult): Linq<TResult> {
-            var a = this.a;
-            var result: TResult[] = [];
+            let a = this.a;
+            let result: TResult[] = [];
 
-            var len = a.length > array.length ? array.length : a.length;
+            let len = a.length > array.length ? array.length : a.length;
 
-            for (var i = 0, n = len; i < n; ++i) {
+            for (let i = 0, n = len; i < n; ++i) {
                 result.push(resultSelector(a[i], array[i]));
             }
 
@@ -612,18 +612,18 @@ interface Array<T> {
 }
 Array.prototype.AsLinq = function <T>(): TSLinq.Linq<T> {
     return new TSLinq.Linq<T>(this);
-}
+};
 
 interface Object { GetHashCode(e): number; }
 Object.GetHashCode = function (e) {
     if (e instanceof Number)
         return Number.GetHashCode(e);
 
-    var s: string = e instanceof Object ? JSON.StringifyNonCircular(e) : e.toString();
+    let s: string = e instanceof Object ? JSON.StringifyNonCircular(e) : e.toString();
 
-    var hash = 0;
+    let hash = 0;
     if (s.length === 0) return hash;
-    for (var i = 0; i < s.length; ++i) {
+    for (let i = 0; i < s.length; ++i) {
         hash = ((hash << 5) - hash) + s.charCodeAt(i);
     }
     return hash;
@@ -646,8 +646,8 @@ interface JSON { StringifyNonCircular(obj: any): string; }
 JSON.StringifyNonCircular = function (obj) {
     var s = s || '';
 
-    for (var i in obj) {
-        var o = obj[i];
+    for (let i in obj) {
+        let o = obj[i];
 
         if (o && (o instanceof Array || o.IsPlain())) {
             s += i + ':' + JSON.stringify(o);

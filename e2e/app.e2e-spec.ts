@@ -1,10 +1,10 @@
-import { CerberusPage } from './app.po';
+import { CerberusDesignPage } from './app.po';
 
-describe('cerberus App', function() {
-  let page: CerberusPage;
+describe('cerberus-design App', function() {
+  let page: CerberusDesignPage;
 
   beforeEach(() => {
-    page = new CerberusPage();
+    page = new CerberusDesignPage();
   });
 
   it('should display message saying app works', () => {

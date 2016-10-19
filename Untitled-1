@@ -11,7 +11,7 @@
             <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
             {{title}}
         </app-toolbar>
-        <div>
+        <div class="container">
             <div class="mdl-grid">
                 <div class="mdl-cell mdl-cell--12-col">
                     <chart [options]="optionsPieGraph"></chart>
@@ -31,25 +31,16 @@
             </div>
             <div class="mdl-grid">
                 <div class="mdl-cell mdl-cell--12-col">
-                    <!--<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
-						<thead>
-							<tr>
-								<th class="mdl-data-table__cell--non-numeric">Пользователь</th>
-								<th>Авторизирован</th>
-								<th>Деавторизирован</th>
-							</tr>
-						</thead>
-
-						<tbody *ngFor="let item of selectedLic">
-							<tr>
-								<td class="mdl-data-table__cell--non-numeric">{{item.LoginName}}</td>
-								<td>{{item.LogonTime}}</td>
-								<td>{{item.LogoffTime}}</td>
-							</tr>
-						</tbody>
-					</table>-->
-                    <paper-datatable data="{{selectedLic}}" selectable multi-selection>
-                    </paper-datatable>
+                    <!--<vaadin-grid [items]="displayedPeople" (sort-order-changed)="sortPeople($event)">-->
+                    <vaadin-grid [items]="displayedPeople">
+                        <table>
+                            <colgroup>
+                                <col name="firstName">
+                                <col name="lastName">
+                                <col name="email">
+                            </colgroup>
+                        </table>
+                    </vaadin-grid>
                     <span class="mdl-chip">
             			<span class="mdl-chip__text">Всего записей</span>
                     </span>

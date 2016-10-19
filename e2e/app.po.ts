@@ -1,6 +1,6 @@
-import { browser, element, by } from 'protractor';
+import { browser, element, by } from 'protractor/globals';
 
-export class CerberusPage {
+export class CerberusDesignPage {
   navigateTo() {
     return browser.get('/');
   }
