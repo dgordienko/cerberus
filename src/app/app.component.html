@@ -1,63 +1,39 @@
 <app-drawer-layout>
     <app-drawer>
-        <ul>
-            <li *ngFor="let hero of heroes" (click)="onSelect(hero)">
-                <button class="mdl-button mdl-js-button mdl-button--primary" style="width:max">{{hero.title}}</button>
-            </li>
-        </ul>
+        <paper-menu>
+            <paper-item *ngFor="let hero of heroes" (click)="onSelect(hero)">{{hero.title}}</paper-item>
+        </paper-menu>
     </app-drawer>
-    <div>
-        <app-toolbar>
-            <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
-            {{title}}
-        </app-toolbar>
-        <div>
-            <div class="mdl-grid">
-                <div class="mdl-cell mdl-cell--12-col">
-                    <chart [options]="optionsPieGraph"></chart>
-                </div>
-            </div>
-            <h5>
-                Ретроспектива
-            </h5>
-            <div class="mdl-grid">
-                <div class="mdl-cell mdl-cell--12-col">
-                    <chart [options]="optionsLineGraph">
-                        <series>
-                            <point (select)="onPointSelect($event)"></point>
-                        </series>
-                    </chart>
-                </div>
-            </div>
-            <div class="mdl-grid">
-                <div class="mdl-cell mdl-cell--12-col">
-                    <!--<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
-						<thead>
-							<tr>
-								<th class="mdl-data-table__cell--non-numeric">Пользователь</th>
-								<th>Авторизирован</th>
-								<th>Деавторизирован</th>
-							</tr>
-						</thead>
-
-						<tbody *ngFor="let item of selectedLic">
-							<tr>
-								<td class="mdl-data-table__cell--non-numeric">{{item.LoginName}}</td>
-								<td>{{item.LogonTime}}</td>
-								<td>{{item.LogoffTime}}</td>
-							</tr>
-						</tbody>
-					</table>-->
-                    <paper-datatable data="{{selectedLic}}" selectable multi-selection>
-                    </paper-datatable>
-                    <span class="mdl-chip">
-            			<span class="mdl-chip__text">Всего записей</span>
-                    </span>
-                    <span class="mdl-chip">
-            			<span class="mdl-chip__text">Показано записей</span>
-                    </span>
-                </div>
-            </div>
+    <app-toolbar>
+        <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+        {{title}}
+        <paper-spinner active class="white" *ngIf="progressStatus >0"></paper-spinner>
+    </app-toolbar>
+    <div class="pure-g" *ngIf="loadedFlag > 0">
+        <div class="pure-u-1 pure-u-md-1-3">
+            <chart [options]="optionPieChart">
+            </chart>
+        </div>
+        <div class="pure-u-1 pure-u-md-1-3">
+            <chart [options]="optionsLineGraph">
+                <series>
+                    <point (select)="onPointSelect($event)"></point>
+                </series>
+            </chart>
+        </div>
+        <div class="pure-u-1 pure-u-md-1-3">
+            <vaadin-grid [items]="selectedLicensesInTime">
+                <table>
+                    <colgroup>
+                        <col name="LoginName">
+                        <col name="LogonTime">
+                        <col name="LogoffTime">
+                        <col name="PasswordKey">
+                        <col name="PersonId">
+                        <col name="UserKey">
+                    </colgroup>
+                </table>
+            </vaadin-grid>
         </div>
     </div>
 </app-drawer-layout>

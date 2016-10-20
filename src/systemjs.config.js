@@ -19,8 +19,7 @@
             'angular2-highcharts': 'npm:angular2-highcharts',
             'angular2-moment': 'npm:angular2-moment',
             'moment': 'npm:moment/min',
-            'angular2-data-table': 'npm:angular2-data-table'
-                // 'highcharts/highstock.src': 'https://cdn.rawgit.com/highcharts/highcharts-dist/v4.2.1/highstock.js'
+            'angular2-data-table': 'https://unpkg.com/angular2-data-table'      
         },
         packages: {
             app: {
@@ -44,10 +43,6 @@
             },
             'angular2-moment': {
                 main: './index.js',
-                defaultExtension: 'js'
-            },
-            'angular2-data-table': {
-                main: './release/index.js',
                 defaultExtension: 'js'
             }
         }

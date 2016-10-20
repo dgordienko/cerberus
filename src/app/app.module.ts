@@ -6,6 +6,7 @@ import { PolymerElement } from '@vaadin/angular2-polymer';
 import { ChartModule } from 'angular2-highcharts';
 import { MomentModule } from 'angular2-moment';
 import { AppComponent } from './app.component';
+import { Angular2DataTableModule } from 'angular2-data-table';
 
 @NgModule({
   declarations: [
@@ -14,8 +15,7 @@ import { AppComponent } from './app.component';
     PolymerElement('paper-menu'),
     PolymerElement('paper-item'),
     PolymerElement('iron-pages'),
-    PolymerElement('paper-card'),
-
+    PolymerElement('paper-spinner'),
     AppComponent
   ],
   imports: [
@@ -23,7 +23,8 @@ import { AppComponent } from './app.component';
     ChartModule,
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    Angular2DataTableModule
   ],
   providers: [],
   bootstrap: [AppComponent],

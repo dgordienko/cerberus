@@ -2,72 +2,88 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <title>CerberusDesign</title>
-    <base href="/">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <script src="assets/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
-    <link rel="import" href="assets/bower_components/iron-icons/iron-icons.html">
-    <link rel="import" href="assets/bower_components/font-roboto/roboto.html">
-    <link rel="import" href="assets/bower_components/paper-styles/color.html">
-    <link rel="import" href="assets/bower_components/paper-styles/typography.html">
-    <link rel="import" href="assets/bower_components/paper-icon-button/paper-icon-button.html">
-    <link rel="import" href="assets/bower_components/vaadin-grid/vaadin-grid.html">
-    <link rel="import" href="assets/bower_components/vaadin-date-picker/vaadin-date-picker.html">
-    <link rel="import" href="assets/bower_components/app-layout/app-drawer/app-drawer.html">
+	<meta charset="utf-8">
+	<title>CerberusDesign</title>
+	<base href="/">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+	<script src="assets/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+	<link rel="import" href="assets/bower_components/polymer/polymer.html">
+	<link rel="import" href="assets/bower_components/iron-icons/iron-icons.html">
+	<link rel="import" href="assets/bower_components/font-roboto/roboto.html">
+	<link rel="import" href="assets/bower_components/paper-styles/color.html">
+	<link rel="import" href="assets/bower_components/paper-styles/typography.html">
+	<link rel="import" href="assets/bower_components/paper-icon-button/paper-icon-button.html">
+	<link rel="import" href="assets/bower_components/vaadin-grid/vaadin-grid.html">
+	<link rel="import" href="assets/bower_components/vaadin-date-picker/vaadin-date-picker.html">
+	<link rel="import" href="assets/bower_components/app-layout/app-drawer/app-drawer.html">
+	<link rel="import" href="assets/bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+	<link rel="import" href="assets/bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+	<link rel="import" href="assets/bower_components/app-layout/app-header/app-header.html">
+	<link rel="import" href="assets/bower_components/app-layout/app-header-layout/app-header-layout.html">
+	<link rel="import" href="assets/bower_components/app-layout/app-toolbar/app-toolbar.html">
+	<link rel="import" href="assets/bower_components/app-layout/demo/sample-content.html">
+	<link rel="import" href="assets/bower_components/iron-pages/iron-pages.html">
+	<link rel="import" href="assets/bower_components/paper-item/paper-item.html">
+	<link rel="import" href="assets/bower_components/paper-menu/paper-menu.html">
+	<link rel="import" href="assets/bower_components/paper-card/paper-card.html">
+	<link rel="import" href="assets/bower_components/paper-styles/default-theme.html">
+	<link rel="import" href="assets/bower_components/app-layout/app-header-layout/app-header-layout.html">
+	<link rel="import" href="assets/bower_components/app-layout/app-scroll-effects/effects/waterfall.html">
+	<link rel="import" href="assets/bower_components/paper-spinner/paper-spinner.html">
+	<link rel="import" href="assets/bower_components/app-layout/app-header/app-header.html">
+	<link rel="import" href="assets/bower_components/app-layout/app-toolbar/app-toolbar.html">
+	<link rel="import" href="assets/bower_components/app-layout/app-grid/app-grid-style.html">
+	<link rel="stylesheet" type="text/css" href="https://unpkg.com/angular2-data-table/release/datatable.css" />
+	<link rel="stylesheet" type="text/css" href="https://unpkg.com/angular2-data-table/release/material.css" />
 
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
 
-    <link rel="import" href="assets/bower_components/polymer/polymer.html">
-    <link rel="import" href="assets/bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
-    <link rel="import" href="assets/bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
-    <link rel="import" href="assets/bower_components/app-layout/app-header/app-header.html">
-    <link rel="import" href="assets/bower_components/app-layout/app-header-layout/app-header-layout.html">
-    <link rel="import" href="assets/bower_components/app-layout/app-toolbar/app-toolbar.html">
-    <link rel="import" href="assets/bower_components/app-layout/demo/sample-content.html">
-    <link rel="import" href="assets/bower_components/iron-pages/iron-pages.html">
-    <link rel="import" href="assets/bower_components/paper-item/paper-item.html">
-    <link rel="import" href="assets/bower_components/paper-menu/paper-menu.html">
-    <link rel="import" href="assets/bower_components/paper-card/paper-card.html">
-    <link rel="stylesheet" href="assets/bower_components/material-design-lite/material.min.css">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
-    <link rel="import" href="assets/bower_components/paper-styles/default-theme.html">
-
-    <link rel="import" href="assets/bower_components/app-layout/app-header-layout/app-header-layout.html">
-    <link rel="import" href="assets/bower_components/app-layout/app-scroll-effects/effects/waterfall.html">
-    <link rel="import" href="assets/bower_components/app-layout/app-header/app-header.html">
-    <link rel="import" href="assets/bower_components/app-layout/app-toolbar/app-toolbar.html">
-    <link rel="import" href="assets/bower_components/app-layout/app-grid/app-grid-style.html">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
-    <script src="assets/bower_components/material-design-lite/material.min.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="assets/bower_components/paper-datatable/paper-datatable.html">
-    <link rel="stylesheet" href="assets/bower_components/paper-datatable/paper-datatable-card.html">
-    <link rel="stylesheet" href="assets/bower_components/paper-datatable/paper-datatable-styles.html">
-    <style is="custom-style">
-        body {
-            margin: 0;
-            font-family: 'Roboto', 'Noto', sans-serif;
-            background-color: white;
-        }
-
-        app-toolbar {
-            background-color: #4285f4;
-            color: #fff;
-        }
-
-        app-drawer {
-            --app-drawer-scrim-background: rgba(0, 0, 100, 0.8);
-            --app-drawer-content-container: {
-                background-color: white;
-            }
-        }
-    </style>
+	<style is="custom-style">
+		body {
+			font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
+			text-align: center;
+			font-style: normal;
+			font-weight: 300;
+			font-size: 1.4rem;
+			line-height: 2rem;
+			letter-spacing: 0.01rem;
+			color: #212121;
+			background-color: #f5f5f5;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			text-rendering: optimizeLegibility;
+		}
+		
+		app-toolbar {
+			background-color: #3F51B5;
+			color: #fff;
+		}
+		
+		app-drawer {
+			--app-drawer-scrim-background: rgba(0, 0, 100, 0.8);
+			--app-drawer-content-container: {
+				background-color: white;
+			}
+		}
+	</style>
+	<style is="custom-style">
+		.centered {
+			min-width: calc(100% - 200px);
+		}
+		
+		paper-toolbar paper-progress {
+			--paper-progress-active-color: var(--accent-color);
+		}
+		
+		.spacer {
+			@apply(--layout-flex);
+		}
+	</style>
 </head>
 
 <body>
-    <app-root>Loading...</app-root>
+	<app-root>Loading...</app-root>
 </body>
 
 </html>

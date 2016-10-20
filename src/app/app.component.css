@@ -1,19 +1,13 @@
-    .mdl-cell {
-        box-sizing: border-box;
-        background-color: transparent;
-        min-height: 340px;
-        padding-left: 8px;
-        padding-top: 4px;
-    }
-    
     chart {
         display: block;
     }
-    
-    vaadin-grid {
-        height: 300px;
+
+    .datatable {
+        text-align: left;
+        margin: 0 auto;
+        height: 400px;
     }
-    
-    paper-card {
-        display: block;
+
+    .datatable.vertical-scroll {
+        height: 70vh;
     }

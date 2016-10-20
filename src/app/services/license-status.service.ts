@@ -1,13 +1,10 @@
-import { IDistributorLicenceInfo } from './../intrf/idistributor-licence-info';
+
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import '../../rxjs-operators';
 
 @Injectable()
 export class LicenseStatusService {
-
-  private url: string;
-
   /**
  * Ссылка на хост службы
  */
@@ -19,8 +16,8 @@ export class LicenseStatusService {
    * Вызов сервиса получения данных о лицензиях филиала
    */
   public getCurrentLicense(url: string) {
-    this.url = url + '/api/cerber/licences';
-    let result = this.http.get(this.url).map((response: Response) => response.json());
+    let u = url + '/api/cerber/licences';
+    let result = this.http.get(u).map((response: Response) => response.json());
     return Promise.resolve(result.toPromise());
   }
 
@@ -33,15 +30,15 @@ export class LicenseStatusService {
    * @memberOf LicenseStatusService
    */
   public getCurrentLicenceStatus(url: string) {
-    this.url = url + '/api/cerber/users';
-    return Promise.resolve((this.http.get(this.url).map((response: Response) => response.json())).toPromise());
+    let u = url + '/api/cerber/users';
+    return Promise.resolve((this.http.get(u).map((response: Response) => response.json())).toPromise());
   }
   /**
    * Получение данных о истории подключенний пользователей
    */
   public getUseLicensedHistoty(url: string, begin: string, end: string) {
-    this.urlUsers = url + this.urlUsers + `${begin}&end=${end}`;
-    return Promise.resolve((this.http.get(this.urlUsers).map((response: Response) => response.json())).toPromise());
+    let urlU = url + this.urlUsers + `${begin}&end=${end}`;
+    return Promise.resolve((this.http.get(urlU).map((response: Response) => response.json())).toPromise());
   };
 
   /**
@@ -55,7 +52,7 @@ export class LicenseStatusService {
  * @memberOf UsersHistoryServiceService
  */
   public getUsersLicenseInfo(url, begin, end: string) {
-    this.urlLicese = url + this.urlLicese + `${begin}&end=${end}`;
-    return Promise.resolve((this.http.get(this.urlLicese).map((response: Response) => response.json())).toPromise());
+    let urlL = url + this.urlLicese + `${begin}&end=${end}`;
+    return Promise.resolve((this.http.get(urlL).map((response: Response) => response.json())).toPromise());
   }
 }

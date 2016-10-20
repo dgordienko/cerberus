@@ -1,5 +1,5 @@
 {
-  "name": "cerberus",
+  "name": "cerberus-design",
   "description": "",
   "main": "",
   "authors": [
@@ -31,7 +31,6 @@
     "material-design-lite": "^1.2.1",
     "moment": "^2.15.1",
     "paper-card": "PolymerElements/paper-card#^1.1.4",
-    "google-chart": "GoogleWebComponents/google-chart#^1.1.1",
-    "paper-datatable": "^0.9.8"
+    "paper-spinner": "PolymerElements/paper-spinner#^1.2.1"
   }
 }
