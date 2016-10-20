@@ -224,6 +224,7 @@ export class AppComponent implements OnInit {
     this.selectedLicensesInTime = users;
     this.rows = users;
     console.table(this.rows);
+    this.licenseInfo.ActiveLicCount = users.length;
     this.detailStatus = 1;
   }
 }
