@@ -6,7 +6,6 @@ import { PolymerElement } from '@vaadin/angular2-polymer';
 import { ChartModule } from 'angular2-highcharts';
 import { MomentModule } from 'angular2-moment';
 import { AppComponent } from './app.component';
-import { Angular2DataTableModule } from 'angular2-data-table';
 
 @NgModule({
   declarations: [
@@ -23,8 +22,7 @@ import { Angular2DataTableModule } from 'angular2-data-table';
     ChartModule,
     BrowserModule,
     FormsModule,
-    HttpModule,
-    Angular2DataTableModule
+    HttpModule
   ],
   providers: [],
   bootstrap: [AppComponent],

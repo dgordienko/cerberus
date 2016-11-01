@@ -11,8 +11,6 @@ import * as moment from 'moment';
 import 'moment/locale/ru.js';
 import './sys/linq';
 
-import { TableOptions, SelectionType, TableColumn, ColumnMode } from 'angular2-data-table';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -23,20 +21,8 @@ import { TableOptions, SelectionType, TableColumn, ColumnMode } from 'angular2-d
 export class AppComponent implements OnInit {
 
   rows = [];
-
-  options = new TableOptions({
-    columnMode: ColumnMode.force,
-    headerHeight: 50,
-    footerHeight: 0,
-    rowHeight: 50,
-    scrollbarV: true,
-    scrollbarH: true
-  });
-
   private loadedFlag: number = -1;
-
   private progressStatus: number = -1;
-
   private detailStatus: number = -1;
 
 
@@ -61,6 +47,9 @@ export class AppComponent implements OnInit {
    * Общая информация о лицензировании точки подключения
    */
   private licenseInfo: ILicenseInfo;
+
+  private peoples: IDistributorUser[] = [];
+  private displayedPeoples: IDistributorUser[] = [];
 
   constructor(private endpoint: EndPointsService, private licenseStatus: LicenseStatusService) { };
 
@@ -215,6 +204,23 @@ export class AppComponent implements OnInit {
     return optionsLineGraph;
   }
 
+  /**
+   * Конфигурация таблици отображаемых данных
+   */
+  private configDataTable(data) {
+
+
+
+//     <hot-table [data]="data"
+//            (after-change)="afterChange($event)"
+//            (after-on-cell-mouse-down)="afterOnCellMouseDown($event)"
+//            [col-headers]="colHeaders"
+//            [columns]="columns"
+//            [options]="options"
+//            [col-widths]="colWidths">
+// </hot-table>
+
+  }
   onPointSelect(e) {
     this.selectedDatePoint = e.context.x;
     let endTime = moment(this.selectedDatePoint).add('h', -3).toDate();
@@ -223,8 +229,8 @@ export class AppComponent implements OnInit {
       && (moment(value.LogonTime).toDate() <= endTime)).ToArray();
     this.selectedLicensesInTime = users;
     this.rows = users;
-    console.table(this.rows);
     this.licenseInfo.ActiveLicCount = users.length;
     this.detailStatus = 1;
   }
+
 }

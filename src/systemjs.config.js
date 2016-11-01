@@ -18,8 +18,7 @@
             '@vaadin/angular2-polymer': 'npm:@vaadin/angular2-polymer',
             'angular2-highcharts': 'npm:angular2-highcharts',
             'angular2-moment': 'npm:angular2-moment',
-            'moment': 'npm:moment/min',
-            'angular2-data-table': 'https://unpkg.com/angular2-data-table'      
+            'moment': 'npm:moment/min'
         },
         packages: {
             app: {
