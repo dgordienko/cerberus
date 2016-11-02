@@ -52,7 +52,7 @@
             <tr *ngFor="let item of displayedPeoples; let i = index;">
               <td>{{i+1}}</td>
               <td class="mdl-data-table__cell--non-numeric">{{item.LoginName}}</td>
-              <td class="mdl-data-table__cell--non-numeric">{{item.LogonTime | amDateFormat:'DD.MM.YYYY hh:mm:ss'}}</td>
+              <td class="mdl-data-table__cell--non-numeric">{{item.LogonTime | amDateFormat:'DD.MM.YYYY HH:mm:ss'}}</td>
               <td class="mdl-data-table__cell--non-numeric">{{item.LogoffTime}}</td>
               <td class="mdl-data-table__cell--non-numeric">{{item.UserKey}}</td>
             </tr>
@@ -64,7 +64,7 @@
     <div class="pure-u-1-5">
       <span class="mdl-chip mdl-chip--contact">
                 <span class="mdl-chip__contact summ mdl-color-text--white">S</span>
-      <span class="mdl-chip__text"> Показано {{displayedpeoplesCount}} из {{allpeoplesCount}} записей</span>
+      <span class="mdl-chip__text"> Показано {{displayedPeoples.length}} из {{selectedPeoples.length}} записей</span>
       </span>
     </div>
     <div class="pure-u-4-5">

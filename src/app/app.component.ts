@@ -37,21 +37,29 @@ export class AppComponent implements OnInit {
 
   private optionsLineGraph: Object;
   private optionPieChart: Object;
-  /**
-   * Все зарегистрированные лицензии
-   */
-  private allUsersLicences: IDistributorUser[] = [];
+
+
 
   /**
    * Общая информация о лицензировании точки подключения
    */
   private licenseInfo: ILicenseInfo;
 
+  /**
+   * Все зарегистрированные лицензии
+   */
   private peoples: IDistributorUser[] = [];
-  private allpeoplesCount : Number = 0;
 
+  /**
+  * Все показанные лицензии
+  */
   private displayedPeoples: IDistributorUser[] = [];
-  private displayedpeoplesCount : Number = 0;
+
+  /**
+   * Все отобранные
+   */
+  private selectedPeoples: IDistributorUser[] = [];
+
   constructor(private endpoint: EndPointsService, private licenseStatus: LicenseStatusService) { };
 
   ngOnInit() {
@@ -63,9 +71,6 @@ export class AppComponent implements OnInit {
 
   /**
    * Построение отображения состояния лицензий для выбранного элемента меню
-   *
-   * @private
-   * @param {string} url
    *
    * @memberOf AppComponent
    */
@@ -84,7 +89,7 @@ export class AppComponent implements OnInit {
         let data: [number, number][] = [];
         result[1].forEach((inf: IDistributorLicenceInfo) => {
           let count = inf.Count;
-          let d = Number.parseInt(moment(inf.Time).add('h', 3).format('x'));
+          let d = Number.parseInt(moment(inf.Time).add(2, 'h').format('x'));
           data.push([d, count]);
         });
 
@@ -92,15 +97,15 @@ export class AppComponent implements OnInit {
 
         this.optionsLineGraph = this.configLineGraph(data);
         this.optionPieChart = this.configPieChar(this.licenseInfo);
-        this.allUsersLicences = (result[2] as IDistributorUser[]);
-        this.allUsersLicences.forEach(x => {
-          x.LogonTime = moment(x.LogonTime);
+        this.peoples = (result[2] as IDistributorUser[]);
+        this.peoples.forEach(x => {
+          x.LogonTime = moment(x.LogonTime).toDate();
           if (x.LogoffTime != null) {
-            x.LogoffTime = moment(x.LogoffTime);
+            x.LogoffTime = moment(x.LogoffTime).toDate();
           }
         });
-        let q = moment(data[data.length - 1][0]).add(-3, 'h');
-        console.log(q);
+        console.table(this.peoples);
+        let q = moment(data[data.length - 1][0]).add(2, 'h').toDate();
         this.getLicensesRetrospective(q);
         this.loadedFlag = 1;
         this.progressStatus = -1;
@@ -217,27 +222,30 @@ export class AppComponent implements OnInit {
 
   onPointSelect(e) {
     this.selectedDatePoint = e.context.x;
-    let endTime = moment(this.selectedDatePoint).add(-3, 'h');
+    let endTime = moment(this.selectedDatePoint).add(-2, 'h').toDate();
     this.getLicensesRetrospective(endTime);
     this.detailStatus = 1;
   }
+
+
   /**
    * Возвращает ретроспективу ползьзователей в выбранный момент времени
    */
   private getLicensesRetrospective(date) {
-    let users = this.allUsersLicences.AsLinq<IDistributorUser>().Where((value: IDistributorUser) =>
+    // let d = Number.parseInt(moment(inf.Time).add(2, 'h').format('x'));
+    console.log(date);
+    let users = this.peoples.AsLinq<IDistributorUser>().Where((value: IDistributorUser) =>
     ((value.LogoffTime) >= date) && ((value.LogonTime) <= date) || (value.LogoffTime == null))
     .OrderByDescending(x => x.LogonTime).ToArray();
-    this.peoples = users;
-    this.displayedPeoples = users;
-    this.allpeoplesCount = this.peoples.length;
-    this.displayedpeoplesCount = this.displayedPeoples.length;
+    console.table(users);
+    this.selectedPeoples = this.displayedPeoples = users;
   }
 
   filterPeople(e) {
         const filterText: string = (<HTMLInputElement>event.target).value.toLowerCase();
-        this.displayedPeoples = this.peoples.filter((person: IDistributorUser) =>
-      !filterText || person.LoginName.toLowerCase().indexOf(filterText) > -1
+        this.displayedPeoples = this.selectedPeoples
+            .filter((person: IDistributorUser) =>
+            !filterText || person.LoginName.toLowerCase().indexOf(filterText) > -1
     );
   }
 }
