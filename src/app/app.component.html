@@ -1,7 +1,7 @@
 <app-drawer-layout>
   <app-drawer>
     <paper-menu>
-      <paper-item *ngFor="let hero of heroes" (click)="onSelect(hero)">{{hero.title}}</paper-item>
+      <paper-item *ngFor="let endpoint of endpoints" (click)="onSelect(hero)">{{endpoint.title}}</paper-item>
     </paper-menu>
   </app-drawer>
   <app-toolbar>

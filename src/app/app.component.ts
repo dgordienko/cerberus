@@ -1,4 +1,3 @@
-import { MomentModule } from 'angular2-moment';
 import { IDistributorUser } from './intrf/idistributor-user';
 import { Component, OnInit } from '@angular/core';
 import { EndPointsService } from './services/end-points.service';
@@ -6,7 +5,6 @@ import { LicenseStatusService } from './services/license-status.service';
 import { IEndPoint } from './intrf/iend-point';
 import { ILicenseInfo } from './intrf/ilicense-info';
 import { IDistributorLicenceInfo } from './intrf/idistributor-licence-info';
-
 import * as moment from 'moment';
 import 'moment/locale/ru.js';
 import './sys/linq';
@@ -20,15 +18,14 @@ import './sys/linq';
 
 export class AppComponent implements OnInit {
 
-  rows = [];
   private loadedFlag: number = -1;
   private progressStatus: number = -1;
   private detailStatus: number = -1;
 
 
   private title: string;
-  private heroes: IEndPoint[];
-  private hero: IEndPoint;
+  private endpoints: IEndPoint[];
+  private endpoint: IEndPoint;
 
   private selectedDatePoint;
 
@@ -60,12 +57,12 @@ export class AppComponent implements OnInit {
    */
   private selectedPeoples: IDistributorUser[] = [];
 
-  constructor(private endpoint: EndPointsService, private licenseStatus: LicenseStatusService) { };
+  constructor(private endpointSrv: EndPointsService, private licenseStatus: LicenseStatusService) { };
 
   ngOnInit() {
     this.title = 'Distributor Cerber';
-    this.endpoint.getEndPoints().then((result: IEndPoint[]) => {
-      this.heroes = result;
+    this.endpointSrv.getEndPoints().then((result: IEndPoint[]) => {
+      this.endpoints = result;
     });
   }
 
@@ -75,6 +72,7 @@ export class AppComponent implements OnInit {
    * @memberOf AppComponent
    */
   private buildDashBoard(url: string, begin, end) {
+    console.log('Построение отображения данных о текущих лицензиях');
     let lic: ILicenseInfo;
     let licinf;
     let userinfo;
@@ -92,11 +90,10 @@ export class AppComponent implements OnInit {
           let d = Number.parseInt(moment(inf.Time).add(2, 'h').format('x'));
           data.push([d, count]);
         });
-
-        moment.locale('rus');
-
+       // moment.locale('rus');
         this.optionsLineGraph = this.configLineGraph(data);
         this.optionPieChart = this.configPieChar(this.licenseInfo);
+        console.log('Получение данных о всех лицензиях, которые были не отозваны');
         this.peoples = (result[2] as IDistributorUser[]);
         this.peoples.forEach(x => {
           x.LogonTime = moment(x.LogonTime).toDate();
@@ -120,14 +117,14 @@ export class AppComponent implements OnInit {
    * @memberOf AppComponent
    */
   public onSelect(value: any): void {
-    this.hero = value;
-    this.title = this.hero.title;
+    this.endpoint = value;
+    this.title = this.endpoint.title;
     this.begin.setHours(0, 0, 0, 0);
     let bd = this.toDate(this.begin);
     let ed = this.toDate(this.end);
     this.loadedFlag = -1;
     this.detailStatus = -1;
-    this.buildDashBoard(this.hero.url, bd, ed);
+    this.buildDashBoard(this.endpoint.url, bd, ed);
   }
 
   /**
@@ -232,8 +229,8 @@ export class AppComponent implements OnInit {
    * Возвращает ретроспективу ползьзователей в выбранный момент времени
    */
   private getLicensesRetrospective(date) {
-    // let d = Number.parseInt(moment(inf.Time).add(2, 'h').format('x'));
-    console.log(date);
+    this.selectedPeoples = this.displayedPeoples = null;
+    console.log(`Получение данных поретроспективе использования лицензии на дату ${date as Date}`);
     let users = this.peoples.AsLinq<IDistributorUser>().Where((value: IDistributorUser) =>
     ((value.LogoffTime) >= date) && ((value.LogonTime) <= date) || (value.LogoffTime == null))
     .OrderByDescending(x => x.LogonTime).ToArray();
