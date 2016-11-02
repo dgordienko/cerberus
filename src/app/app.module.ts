@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
     PolymerElement('vaadin-date-picker'),
     PolymerElement('paper-menu'),
     PolymerElement('paper-item'),
+    PolymerElement('paper-input'),
     PolymerElement('iron-pages'),
     PolymerElement('paper-spinner'),
     AppComponent

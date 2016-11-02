@@ -1,5 +1,5 @@
+import { MomentModule } from 'angular2-moment';
 import { IDistributorUser } from './intrf/idistributor-user';
-// import { element } from 'protractor/globals';
 import { Component, OnInit } from '@angular/core';
 import { EndPointsService } from './services/end-points.service';
 import { LicenseStatusService } from './services/license-status.service';
@@ -42,19 +42,20 @@ export class AppComponent implements OnInit {
    */
   private allUsersLicences: IDistributorUser[] = [];
 
-  private selectedLicensesInTime: IDistributorUser[] = [];
   /**
    * Общая информация о лицензировании точки подключения
    */
   private licenseInfo: ILicenseInfo;
 
   private peoples: IDistributorUser[] = [];
-  private displayedPeoples: IDistributorUser[] = [];
+  private allpeoplesCount : Number = 0;
 
+  private displayedPeoples: IDistributorUser[] = [];
+  private displayedpeoplesCount : Number = 0;
   constructor(private endpoint: EndPointsService, private licenseStatus: LicenseStatusService) { };
 
   ngOnInit() {
-    this.title = 'DistributorUser.Cerber';
+    this.title = 'Distributor Cerber';
     this.endpoint.getEndPoints().then((result: IEndPoint[]) => {
       this.heroes = result;
     });
@@ -86,10 +87,21 @@ export class AppComponent implements OnInit {
           let d = Number.parseInt(moment(inf.Time).add('h', 3).format('x'));
           data.push([d, count]);
         });
+
         moment.locale('rus');
+
         this.optionsLineGraph = this.configLineGraph(data);
         this.optionPieChart = this.configPieChar(this.licenseInfo);
         this.allUsersLicences = (result[2] as IDistributorUser[]);
+        this.allUsersLicences.forEach(x => {
+          x.LogonTime = moment(x.LogonTime);
+          if (x.LogoffTime != null) {
+            x.LogoffTime = moment(x.LogoffTime);
+          }
+        });
+        let q = moment(data[data.length - 1][0]).add(-3, 'h');
+        console.log(q);
+        this.getLicensesRetrospective(q);
         this.loadedFlag = 1;
         this.progressStatus = -1;
       }).catch((x) => console.table(x));
@@ -132,7 +144,6 @@ export class AppComponent implements OnInit {
    *  Конфигурация круговой диграммы использования лицензий
    */
   private configPieChar(data: ILicenseInfo): Object {
-    console.table(data);
     return {
       colors: ['#FF4081', '#3F51B5'],
       chart: {
@@ -163,10 +174,10 @@ export class AppComponent implements OnInit {
       series: [{
         name: 'Лицензий',
         data: [{
-          name: 'использовано',
+          name: `использовано ${data.ActiveLicCount}`,
           y: data.ActiveLicCount
         }, {
-          name: 'осталось',
+          name: `осталось ${data.LicCount}`,
           y: data.LicCount,
           sliced: true,
           selected: true
@@ -204,33 +215,22 @@ export class AppComponent implements OnInit {
     return optionsLineGraph;
   }
 
-  /**
-   * Конфигурация таблици отображаемых данных
-   */
-  private configDataTable(data) {
-
-
-
-//     <hot-table [data]="data"
-//            (after-change)="afterChange($event)"
-//            (after-on-cell-mouse-down)="afterOnCellMouseDown($event)"
-//            [col-headers]="colHeaders"
-//            [columns]="columns"
-//            [options]="options"
-//            [col-widths]="colWidths">
-// </hot-table>
-
-  }
   onPointSelect(e) {
     this.selectedDatePoint = e.context.x;
-    let endTime = moment(this.selectedDatePoint).add('h', -3).toDate();
-    let users = this.allUsersLicences.AsLinq<IDistributorUser>().Where((value: IDistributorUser) =>
-      ((moment(value.LogoffTime).toDate() >= endTime))
-      && (moment(value.LogonTime).toDate() <= endTime)).ToArray();
-    this.selectedLicensesInTime = users;
-    this.rows = users;
-    this.licenseInfo.ActiveLicCount = users.length;
+    let endTime = moment(this.selectedDatePoint).add(-3, 'h');
+    this.getLicensesRetrospective(endTime);
     this.detailStatus = 1;
   }
-
+  /**
+   * Возвращает ретроспективу ползьзователей в выбранный момент времени
+   */
+  private getLicensesRetrospective(date) {
+    let users = this.allUsersLicences.AsLinq<IDistributorUser>().Where((value: IDistributorUser) =>
+    ((value.LogoffTime) >= date) && ((value.LogonTime) <= date) || (value.LogoffTime == null))
+    .OrderByDescending(x => x.LogonTime).ToArray();
+    this.peoples = users;
+    this.displayedPeoples = this.peoples;
+    this.allpeoplesCount = this.peoples.length;
+    this.displayedpeoplesCount = this.displayedPeoples.length;
+  }
 }

@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>CerberusDesign</title>
+	<title>Cerberus</title>
 	<base href="/">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -26,6 +26,7 @@
 	<link rel="import" href="assets/bower_components/app-layout/app-toolbar/app-toolbar.html">
 	<link rel="import" href="assets/bower_components/iron-pages/iron-pages.html">
 	<link rel="import" href="assets/bower_components/paper-item/paper-item.html">
+	<link rel="import" href="assets/bower_components/paper-input/paper-input.html">
 	<link rel="import" href="assets/bower_components/paper-menu/paper-menu.html">
 	<link rel="import" href="assets/bower_components/paper-card/paper-card.html">
 	<link rel="import" href="assets/bower_components/paper-styles/default-theme.html">
@@ -43,22 +44,21 @@
 			line-height: 2rem;
 			letter-spacing: 0.01rem;
 			color: #212121;
-			background-color: #f5f5f5;
+			background-color: white;
 			-webkit-font-smoothing: antialiased;
 			-moz-osx-font-smoothing: grayscale;
 			text-rendering: optimizeLegibility;
 		}
-
+		
 		.scrollbox {
-			height: 300px;
 			overflow: auto;
 		}
-
+		
 		app-toolbar {
 			background-color: #3F51B5;
 			color: #fff;
 		}
-
+		
 		app-drawer {
 			--app-drawer-scrim-background: #3F51B5;
 			--app-drawer-content-container: {
@@ -70,11 +70,11 @@
 		.centered {
 			min-width: calc(100% - 200px);
 		}
-
+		
 		paper-toolbar paper-progress {
 			--paper-progress-active-color: var(--accent-color);
 		}
-
+		
 		.spacer {
 			@apply(--layout-flex);
 		}
