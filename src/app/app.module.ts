@@ -9,7 +9,6 @@ import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [
-    PolymerElement('vaadin-grid'),
     PolymerElement('vaadin-date-picker'),
     PolymerElement('paper-menu'),
     PolymerElement('paper-item'),

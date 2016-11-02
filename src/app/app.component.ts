@@ -229,8 +229,15 @@ export class AppComponent implements OnInit {
     ((value.LogoffTime) >= date) && ((value.LogonTime) <= date) || (value.LogoffTime == null))
     .OrderByDescending(x => x.LogonTime).ToArray();
     this.peoples = users;
-    this.displayedPeoples = this.peoples;
+    this.displayedPeoples = users;
     this.allpeoplesCount = this.peoples.length;
     this.displayedpeoplesCount = this.displayedPeoples.length;
+  }
+
+  filterPeople(e) {
+        const filterText: string = (<HTMLInputElement>event.target).value.toLowerCase();
+        this.displayedPeoples = this.peoples.filter((person: IDistributorUser) =>
+      !filterText || person.LoginName.toLowerCase().indexOf(filterText) > -1
+    );
   }
 }

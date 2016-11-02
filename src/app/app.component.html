@@ -1,74 +1,73 @@
 <app-drawer-layout>
-	<app-drawer>
-		<paper-menu>
-			<paper-item *ngFor="let hero of heroes" (click)="onSelect(hero)">{{hero.title}}</paper-item>
-		</paper-menu>
-	</app-drawer>
-	<app-toolbar>
-		<paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
-		{{title}}
-		<paper-spinner active class="white" *ngIf="progressStatus >0"></paper-spinner>
-	</app-toolbar>
-	<div class="pure-g maincnt" *ngIf="loadedFlag > 0">
-		<div class="pure-u-1-5">
-			<span class="mdl-chip mdl-chip--contact">
+  <app-drawer>
+    <paper-menu>
+      <paper-item *ngFor="let hero of heroes" (click)="onSelect(hero)">{{hero.title}}</paper-item>
+    </paper-menu>
+  </app-drawer>
+  <app-toolbar>
+    <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+    {{title}}
+    <paper-spinner active class="white" *ngIf="progressStatus >0"></paper-spinner>
+  </app-toolbar>
+  <div class="pure-g maincnt" *ngIf="loadedFlag > 0">
+    <div class="pure-u-1-5">
+      <span class="mdl-chip mdl-chip--contact">
                 <span class="mdl-chip__contact summ mdl-color-text--white">L</span>
-			<span class="mdl-chip__text"> Всего: {{licenseInfo.LicCount}} использовано:{{licenseInfo.ActiveLicCount}}</span>
-			</span>
-		</div>
-		<div class="pure-u-3-5">
-			<chart [options]="optionPieChart"></chart>
-		</div>
-		<div class="pure-u-1-5">
-			<vaadin-date-picker label="дата с" value="2016-11-01"></vaadin-date-picker>
-			<vaadin-date-picker label="дата по" value="2016-11-01"></vaadin-date-picker>
-		</div>
-		<div class="pure-u-1">
-			<chart [options]="optionsLineGraph">
-				<series>
-					<point (select)="onPointSelect($event)"></point>
-				</series>
-			</chart>
-		</div>
-		<div class="pure-u-1 devider"></div>
-		<div class="pure-u-3-5">
-
-		</div>
-		<div class="pure-u-2-5">
-			<paper-input label="поиск по имени" type="search"></paper-input>
-		</div>
-		<div class="pure-u-1">
-			<div style="height:300px;overflow-y:scroll;overflow-x:hide;">
-				<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp dtable">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th class="mdl-data-table__cell--non-numeric">Лицензия выдана</th>
-							<th class="mdl-data-table__cell--non-numeric">Лицензия авторизирована</th>
-							<th class="mdl-data-table__cell--non-numeric">Лицензия отозвана</th>
-							<th class="mdl-data-table__cell--non-numeric">Ключ сеанса</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr *ngFor="let item of peoples; let i = index;">
-							<td>{{i+1}}</td>
-							<td class="mdl-data-table__cell--non-numeric">{{item.LoginName}}</td>
-							<td class="mdl-data-table__cell--non-numeric">{{item.LogonTime | amDateFormat:'DD-MM-YYYY HH:MM:SS'}}</td>
-							<td class="mdl-data-table__cell--non-numeric">{{item.LogoffTime}}</td>
-							<td class="mdl-data-table__cell--non-numeric">{{item.UserKey}}</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		<div class="devider"></div>
-		<div class="pure-u-1-5">	
-			<span class="mdl-chip mdl-chip--contact">
+      <span class="mdl-chip__text"> Всего: {{licenseInfo.LicCount}} использовано:{{licenseInfo.ActiveLicCount}}</span>
+      </span>
+    </div>
+    <div class="pure-u-3-5">
+      <chart [options]="optionPieChart"></chart>
+    </div>
+    <div class="pure-u-1-5">
+      <vaadin-date-picker label="дата с" value="2016-11-01"></vaadin-date-picker>
+      <vaadin-date-picker label="дата по" value="2016-11-01"></vaadin-date-picker>
+    </div>
+    <div class="pure-u-1">
+      <chart [options]="optionsLineGraph">
+        <series>
+          <point (select)="onPointSelect($event)"></point>
+        </series>
+      </chart>
+    </div>
+    <div class="pure-u-1 devider"></div>
+    <div class="pure-u-4-5">
+    </div>
+    <div class="pure-u-1-5">
+      <paper-input label="поиск по имени" type="search" (keyup)="filterPeople($event)"></paper-input>
+    </div>
+    <div class="pure-u-1">
+      <div style="height:300px;overflow-y:scroll;overflow-x:hide;">
+        <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp dtable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th class="mdl-data-table__cell--non-numeric">Лицензия выдана</th>
+              <th class="mdl-data-table__cell--non-numeric">Лицензия авторизирована</th>
+              <th class="mdl-data-table__cell--non-numeric">Лицензия отозвана</th>
+              <th class="mdl-data-table__cell--non-numeric">Ключ сеанса</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of displayedPeoples; let i = index;">
+              <td>{{i+1}}</td>
+              <td class="mdl-data-table__cell--non-numeric">{{item.LoginName}}</td>
+              <td class="mdl-data-table__cell--non-numeric">{{item.LogonTime | amDateFormat:'DD.MM.YYYY hh:mm:ss'}}</td>
+              <td class="mdl-data-table__cell--non-numeric">{{item.LogoffTime}}</td>
+              <td class="mdl-data-table__cell--non-numeric">{{item.UserKey}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="devider"></div>
+    <div class="pure-u-1-5">
+      <span class="mdl-chip mdl-chip--contact">
                 <span class="mdl-chip__contact summ mdl-color-text--white">S</span>
-				<span class="mdl-chip__text"> Показано {{displayedpeoplesCount}} из {{allpeoplesCount}} записей</span>
-			</span>					
-		</div>
-		<div class="pure-u-4-5">			
-		</div>
-	</div>
+      <span class="mdl-chip__text"> Показано {{displayedpeoplesCount}} из {{allpeoplesCount}} записей</span>
+      </span>
+    </div>
+    <div class="pure-u-4-5">
+    </div>
+  </div>
 </app-drawer-layout>
